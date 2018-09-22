@@ -203,9 +203,12 @@ void setup()
     log("connected...yeey :)");
 
     apiTimer.start();
+    ntpTimer.start();
 }
 
 void loop()
 {
     apiTimer.update();
+    ntpTimer.update();
+
 }
