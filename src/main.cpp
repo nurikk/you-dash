@@ -1,3 +1,4 @@
+#include "main.h"
 #include <FS.h>
 #include <ESP8266WiFi.h> //https://github.com/esp8266/Arduino
 #include <DNSServer.h>
@@ -7,7 +8,7 @@
 #include <ESP8266HTTPClient.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "Ticker.h"
+#include <Ticker.h>
 #include <TimeLib.h>
 #include <NtpClientLib.h>
 
@@ -16,18 +17,25 @@
 #define I2C_ADDR 0x27
 #define I2C_LINES 4
 #define I2C_COLS 24
+#define DEFAULT_API_UPDATE_INTERVAL 5000
+#define DEFAULT_NTP_UPDATE_INTEVAL 1000
+#define API_URL "http://content.googleapis.com/youtube/v3/channels?id=%s&part=statistics&key=%s"
 
-int api_update_interval = 5000;
-char api_token[40];
-char channel_id[25];
+struct Config
+{
+    char api_token[40];
+    char channel_id[25];
+    int api_update_interval = DEFAULT_API_UPDATE_INTERVAL;
+    int ntp_update_interval = DEFAULT_NTP_UPDATE_INTEVAL;
+};
+
+Config config;
+
 bool shouldSaveConfig = false;
 bool initializationDone = false;
-void getJsonData();
-void ntpTick();
-void log(const char *logString);
 
-Ticker apiTimer(getJsonData, api_update_interval);
-Ticker ntpTimer(ntpTick, 1000);
+Ticker apiTimer(getJsonData, config.api_update_interval);
+Ticker ntpTimer(ntpTick, config.ntp_update_interval);
 
 LiquidCrystal_I2C lcd(I2C_ADDR, I2C_COLS, I2C_LINES);
 
@@ -59,7 +67,7 @@ void setupNTP()
 void ntpTick()
 {
     String msg = "Got NTP time: " + NTP.getTimeDateString(NTP.getLastNTPSync());
-    log((const char *) msg.c_str());
+    log(msg.c_str());
 }
 
 void log(const char *logString)
@@ -83,13 +91,12 @@ void getJsonData()
 {
 
     char api_url[255];
-    sprintf(api_url, "http://content.googleapis.com/youtube/v3/channels?id=%s&part=statistics&key=%s", channel_id, api_token);
+    sprintf(api_url, API_URL, config.channel_id, config.api_token);
     HTTPClient http;
     http.begin(api_url);
     int httpCode = http.GET();
     if (httpCode > 0)
     {
-        // HTTP header has been send and Server response header has been handled
         log("[HTTP] GET... code: " + httpCode);
 
         // file found at server
@@ -125,28 +132,27 @@ void getJsonData()
 
 void SPIFFSRead()
 {
-    if (SPIFFS.begin())
+    if (SPIFFS.begin() && SPIFFS.exists(CONFIG_FILE_NAME))
     {
-        log("mounted file system");
-        if (SPIFFS.exists(CONFIG_FILE_NAME))
+        log("reading config file");
+        File configFile = SPIFFS.open(CONFIG_FILE_NAME, "r");
+        if (configFile)
         {
-            log("reading config file");
-            File configFile = SPIFFS.open(CONFIG_FILE_NAME, "r");
-            if (configFile)
+            log("opened config file");
+            size_t size = configFile.size();
+            std::unique_ptr<char[]> buf(new char[size]);
+
+            configFile.readBytes(buf.get(), size);
+            DynamicJsonBuffer jsonBuffer;
+            JsonObject &json = jsonBuffer.parseObject(buf.get());
+
+            if (json.success())
             {
-                log("opened config file");
-                size_t size = configFile.size();
-                std::unique_ptr<char[]> buf(new char[size]);
-
-                configFile.readBytes(buf.get(), size);
-                DynamicJsonBuffer jsonBuffer;
-                JsonObject &json = jsonBuffer.parseObject(buf.get());
-
-                if (json.success())
-                {
-                    log("parsed json");
-                    strcpy(api_token, json["api_token"]);
-                }
+                log("parsed json");
+                strlcpy(config.api_token, json["api_token"], sizeof(config.api_token));
+                strlcpy(config.channel_id, json["channel_id"], sizeof(config.channel_id));
+                config.api_update_interval = json["api_update_interval"] || DEFAULT_API_UPDATE_INTERVAL;
+                config.ntp_update_interval = json["ntp_update_interval"] || DEFAULT_NTP_UPDATE_INTEVAL;
             }
         }
     }
@@ -157,24 +163,37 @@ void SPIFFSWrite()
     log("saving config");
     DynamicJsonBuffer jsonBuffer;
     JsonObject &json = jsonBuffer.createObject();
-    json["api_token"] = api_token;
+    json["api_token"] = config.api_token;
+    json["channel_id"] = config.channel_id;
+    json["api_update_interval"] = config.api_update_interval;
+    json["ntp_update_interval"] = config.ntp_update_interval;
+
     File configFile = SPIFFS.open(CONFIG_FILE_NAME, "w");
-    if (!configFile)
+    if (configFile)
+    {
+        json.printTo(configFile);
+        configFile.close();
+    }
+    else
     {
         log("failed to open config file for writing");
     }
-    json.printTo(configFile);
-    configFile.close();
 }
 void setupWifi()
 {
     WiFiManager wifiManager;
     wifiManager.setMinimumSignalQuality();
-    WiFiManagerParameter custom_api_token("api_token", "api token", api_token, 40);
+
+    WiFiManagerParameter custom_api_token("api_token", "api token", config.api_token, 40);
+    WiFiManagerParameter custom_channel_id("channel_id", "channel id", config.channel_id, 25);
+    // TODO: add api_update_interval and ntp_update_interval params to setup
+
     wifiManager.addParameter(&custom_api_token);
+    wifiManager.addParameter(&custom_channel_id);
+
     wifiManager.setSaveConfigCallback(saveConfigCallback);
 
-    if (!wifiManager.autoConnect("AutoConnectAP"))
+    if (!wifiManager.autoConnect("Youtube dashboard"))
     {
         log("failed to connect and hit timeout");
         delay(3000);
@@ -182,7 +201,8 @@ void setupWifi()
         delay(5000);
     }
 
-    strcpy(api_token, custom_api_token.getValue());
+    strlcpy(config.api_token, custom_api_token.getValue(), sizeof(config.api_token));
+    strlcpy(config.channel_id, custom_channel_id.getValue(), sizeof(config.channel_id));
 }
 void setup()
 {
@@ -210,5 +230,4 @@ void loop()
 {
     apiTimer.update();
     ntpTimer.update();
-
 }
