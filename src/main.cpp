@@ -27,6 +27,7 @@ struct Config
     char channel_id[25];
     int api_update_interval = DEFAULT_API_UPDATE_INTERVAL;
     int ntp_update_interval = DEFAULT_NTP_UPDATE_INTEVAL;
+    int timezone = 0;
 };
 
 Config config;
@@ -62,10 +63,12 @@ void setupNTP()
     });
     NTP.begin(NTP_SERVER, 1, true);
     NTP.setInterval(63);
+    NTP.setTimeZone(config.timezone);
 }
 // TODO: display time on display
 void ntpTick()
 {
+    // NTP.setTimeZone(12);
     String msg = "Got NTP time: " + NTP.getTimeDateString(NTP.getLastNTPSync());
     log(msg.c_str());
 }
@@ -153,6 +156,8 @@ void SPIFFSRead()
                 strlcpy(config.channel_id, json["channel_id"], sizeof(config.channel_id));
                 config.api_update_interval = json["api_update_interval"] || DEFAULT_API_UPDATE_INTERVAL;
                 config.ntp_update_interval = json["ntp_update_interval"] || DEFAULT_NTP_UPDATE_INTEVAL;
+                config.timezone = json["timezone"] || 0;
+
             }
         }
     }
@@ -167,6 +172,8 @@ void SPIFFSWrite()
     json["channel_id"] = config.channel_id;
     json["api_update_interval"] = config.api_update_interval;
     json["ntp_update_interval"] = config.ntp_update_interval;
+    json["timezone"] = config.timezone;
+
 
     File configFile = SPIFFS.open(CONFIG_FILE_NAME, "w");
     if (configFile)
@@ -186,7 +193,7 @@ void setupWifi()
 
     WiFiManagerParameter custom_api_token("api_token", "api token", config.api_token, 40);
     WiFiManagerParameter custom_channel_id("channel_id", "channel id", config.channel_id, 25);
-    // TODO: add api_update_interval and ntp_update_interval params to setup
+    // TODO: add api_update_interval, ntp_update_interval and timezone params to setup
 
     wifiManager.addParameter(&custom_api_token);
     wifiManager.addParameter(&custom_channel_id);
@@ -203,6 +210,7 @@ void setupWifi()
 
     strlcpy(config.api_token, custom_api_token.getValue(), sizeof(config.api_token));
     strlcpy(config.channel_id, custom_channel_id.getValue(), sizeof(config.channel_id));
+
 }
 void setup()
 {
