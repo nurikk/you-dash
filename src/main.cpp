@@ -37,7 +37,7 @@ bool initializationDone = false;
 Ticker apiTimer(getJsonData, config.api_update_interval);
 Ticker ntpTimer(ntpTick, config.ntp_update_interval);
 
-LiquidCrystal_I2C lcd(I2C_ADDR, I2C_COLS, I2C_LINES);
+LiquidCrystal_I2C lcd(I2C_ADDR);
 
 void setupNTP()
 {
@@ -208,8 +208,9 @@ void setup()
 {
 
     Serial.begin(115200);
-    lcd.init();
+    lcd.begin(I2C_COLS, I2C_LINES);
     lcd.backlight();
+    lcd.home();
     lcd.setCursor(3, 0);
     log("Hello, world!");
 
