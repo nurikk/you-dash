@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "e4173d28-d2a7-4492-a348-7e1c4cd75183",
+		"name": "youtube dash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get config (memory)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/config",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get config (SPIFFS)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/config.json",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"config.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SPIFFS list files",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/dir?dir=/",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"dir"
+					],
+					"query": [
+						{
+							"key": "dir",
+							"value": "/"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload file to SPIFFS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "/main.html",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/upload",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"upload"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "/main.html",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/auth",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"auth"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enter oauth token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "authorization_code",
+							"value": "sadasd",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/exchange",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"exchange"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update config",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "access_token",
+							"value": "!access_token!",
+							"type": "text"
+						},
+						{
+							"key": "api_update_interval",
+							"value": "5000",
+							"type": "text"
+						},
+						{
+							"key": "timezone",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "channel_id",
+							"value": "ezhov-tv",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/config",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"config"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bdf5d1e5-6b2e-4784-8620-87ed59aad7c4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "696aa843-4950-45ac-8c1c-0d428806e9da",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "295eb3cc-57a3-4132-b94a-5d201cb7c696",
+			"key": "dash_ip",
+			"value": "10.0.0.20",
+			"type": "string"
+		}
+	]
+}

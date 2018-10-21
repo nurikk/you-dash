@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous">
+    <title>Youtube dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="auth">
+        <a target="_blank" href="/auth">Click here</a>
+        <form>
+            <div class="form-group">
+                <label for="key">Api key</label>
+                <input required type="text" class="form-control" id="authorization_code" placeholder="Enter authorization code from google">
+            </div>
+            <button type="submit" class="btn btn-primary">Auth</button>
+        </form>
+    </div>
+    <div id="config">
+        <form>
+            <div class="form-group">
+                <label for="key">api_update_interval</label>
+                <input required type="number" class="form-control" name="api_update_interval" placeholder="Enter api update interval">
+            </div>
+
+            <div class="form-group">
+                <label for="key">timezone</label>
+                <input required type="number" class="form-control" name="timezone" placeholder="Enter timezone">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update config</button>
+        </form>
+    </div>
+    <script>
+        var hiddenClass = "d-none";
+
+        var intiConfigForm = function (config) {
+            $("#config").removeClass(hiddenClass);
+            $("#config input").each(function (idx, el) {
+                var $el = $(el);
+                var name = $el.attr("name");
+                $el.val(config[name]);
+            });
+        };
+
+        var init = function () {
+            $("#auth,#config").addClass(hiddenClass);
+            $.get("/config", function (config) {
+                if (!config['access_token']) {
+                    $('#auth').removeClass(hiddenClass);
+                } else {
+                    intiConfigForm(config);
+                }
+            });
+        };
+        var onAuthSubmit = function (e) {
+            e.preventDefault();
+            var authorization_code = $("#authorization_code").val();
+            $.ajax({
+                type: "POST",
+                url: "/exchange",
+                data: {
+                    "authorization_code": authorization_code
+                },
+                success: init
+            });
+            return false;
+        };
+
+        var onConfigSubmit = function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/config",
+                data: $(this).serialize(),
+                success: init
+            });
+        };
+
+        $(function () {
+            init();
+            $("body").on("submit", "#auth form", onAuthSubmit);
+            $("body").on("submit", "#config form", onConfigSubmit);
+
+        });
+    </script>
+</body>
+
+</html>

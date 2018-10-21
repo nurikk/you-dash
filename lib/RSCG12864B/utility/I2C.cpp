@@ -12,7 +12,7 @@ void I2C_init(void)
 
 // Arbitration becomes host and sends START signal
 // return value: 1 for success, 0 for failure
-uint8_t I2C_start(void)
+void I2C_start(void)
 {
 	Wire.beginTransmission(ADDR);
 }
@@ -25,7 +25,7 @@ void I2C_stop(void)
 
 // Issued from the machine address and write command, that is, SLA + W, into the MT mode
 // return value: 1 for success, 0 for failure
-uint8_t I2C_to_write(void)
+void I2C_to_write(void)
 {
 }
 
@@ -33,5 +33,5 @@ uint8_t I2C_to_write(void)
 // return value: 0 for failure, 1 for ACK, 2 for NOT ACK
 uint8_t I2C_send(uint8_t data)
 {
-	Wire.write(data);
+	return Wire.write(data);
 }
