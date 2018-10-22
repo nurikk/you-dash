@@ -40,6 +40,10 @@ ESP8266WebServer server(80);
 #define API_REFRESH_INTERVAL 5 * 60 * 1000 // 5 minutes
 
 const size_t configBufferSize = JSON_OBJECT_SIZE(5) + 400;
+const size_t mainApiResponseBufferSize = 31 * JSON_ARRAY_SIZE(5) + JSON_ARRAY_SIZE(30) + JSON_OBJECT_SIZE(2) + 5 * JSON_OBJECT_SIZE(3) + 1120;
+
+DynamicJsonBuffer jsonBuffer(mainApiResponseBufferSize);
+JsonObject &mainApiResponse;
 
 struct Config
 {
@@ -139,51 +143,7 @@ void displayData(JsonObject &data)
 void getJsonData()
 {
 
-    // char api_url[255];
-
-    // Log.notice("Getting json api data... %s\n", api_url);
-    // if (!client.connect(API_HOST, 443))
-    // {
-    //     Log.error("Connection failed\n");
-    //     return;
-    // }
-
-    // client.print(String("GET ") + api_url + " HTTP/1.1\r\n" +
-    //              "Host: " + API_HOST + "\r\n" +
-    //              "Connection: close\r\n\r\n");
-
-    // while (client.connected())
-    // {
-    //     String line = client.readStringUntil('\n');
-    //     Log.trace("%s\n", line.c_str());
-    //     if (line == "\r")
-    //     {
-    //         Log.notice("Headers received\n");
-    //         break;
-    //     }
-    // }
-    // String payload = "";
-    // while (client.connected())
-    // {
-    //     payload += client.readStringUntil('\n');
-    //     payload += '\n';
-    // }
-
-    // Log.trace("Payload: %s\n", payload.c_str());
-
-    // const size_t capacity = 1024;
-    // DynamicJsonBuffer jsonBuffer(capacity);
-
-    // JsonObject &root = jsonBuffer.parseObject(payload);
-    // if (root.success())
-    // {
-    //     displayData(root);
-    //     initializationDone = true;
-    // }
-    // else
-    // {
-    //     Log.error("Parsing failed!\n");
-    // }
+    
 }
 
 void SPIFFSRead()
@@ -428,6 +388,14 @@ void setup()
     delay(5000);
     Log.begin(LOG_LEVEL_VERBOSE, &Serial);
 
+    setupI2C();
+    RSCG12864B.clear();
+    RSCG12864B.draw_fill_rectangle(0, 50, 5, 64);
+    RSCG12864B.draw_pixel(50, 0);
+
+    // parsApi();
+    return;
+
     Log.notice("Serial ok\n");
 
     if (SPIFFS.begin())
@@ -440,7 +408,7 @@ void setup()
     }
 
     SPIFFSRead();
-    setupI2C();
+
     setupWifi();
     Log.notice("Connected...yeey :)\n");
     setupNTP();
@@ -465,12 +433,109 @@ void setup()
     // oauthTokenRefresh();
 }
 
+void displayMetric(size_t idx, JsonObject &root)
+{
+    JsonArray &rows = root["rows"];
+    Log.notice("Rows count %d\n", rows.size());
+    const int width = 128;
+    const int height = 48;
+    const int barWidth = width / rows.size();
+    const int startHeight = 8;
+    const char *name = root["columnHeaders"][idx]["name"];
+    Log.notice("barWidth %d, \n", barWidth);
+
+    RSCG12864B.clear();
+    Log.notice("Display metric %s\n", name);
+
+    String data = String();
+    int minValue = rows[0][idx];
+    int maxValue = rows[0][idx];
+    for (size_t row = 0; row < rows.size(); row++)
+    {
+        minValue = min((int)rows[row][idx], minValue);
+        maxValue = max((int)rows[row][idx], maxValue);
+    }
+
+    int x, y, preX, preY;
+    x = y = preX = preY = 0;
+    size_t rowsCount = rows.size();
+    String dx = String();
+    RSCG12864B.draw_fill_rectangle(0, 0, 127, 7);
+    RSCG12864B.draw_fill_rectangle(0, 56, 127, 63);
+    RSCG12864B.font_revers_on();
+    RSCG12864B.print_string_5x7_xy(0, 0, name);
+
+    RSCG12864B.print_string_5x7_xy(0, 56, String("min:" + String(minValue)).c_str());
+
+    String maxStr = "max:" + String(maxValue);
+    int maxYpostion = width - 6 * maxStr.length();
+    Log.notice("maxYpostion: %d\n", maxYpostion);
+    RSCG12864B.print_string_5x7_xy(maxYpostion, 0, maxStr.c_str());
+    RSCG12864B.font_revers_off();
+
+    Log.notice("%s\n", maxStr.c_str());
+
+    // RSCG12864B.print_string_5x7_xy(0, 54, minValue);
+    for (size_t row = 0; row < rowsCount; row++)
+    {
+        int mappedValue = map(rows[row][idx], minValue, maxValue, 0, height);
+        x = row * barWidth + row;
+        y = startHeight + height - mappedValue;
+
+        RSCG12864B.draw_fill_circle(x, y, 1);
+        if (row == 0 || row == rowsCount)
+        {
+            RSCG12864B.draw_pixel(x, y);
+        }
+        else
+        {
+            RSCG12864B.draw_line(preX, preY, x, y);
+        }
+
+        preX = x;
+        preY = y;
+
+        data += mappedValue;
+        data += " ";
+
+        dx += String(x);
+        dx += "  ";
+    }
+
+    Log.notice("Min: %d Max: %d\n", minValue, maxValue);
+    Log.notice("%s\n", dx.c_str());
+    Log.notice("%s\n", data.c_str());
+}
+
+
+const char *json = "{\"columnHeaders\":[{\"name\":\"day\",\"columnType\":\"DIMENSION\",\"dataType\":\"STRING\"},{\"name\":\"views\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"},{\"name\":\"comments\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"},{\"name\":\"likes\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"},{\"name\":\"dislikes\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"}],\"rows\":[[\"2018-09-21\",11806,13,170,24],[\"2018-09-22\",11846,6,86,20],[\"2018-09-23\",12929,37,241,26],[\"2018-09-24\",11531,22,137,21],[\"2018-09-25\",12315,28,293,27],[\"2018-09-26\",8258,10,127,19],[\"2018-09-27\",11124,59,371,33],[\"2018-09-28\",7945,16,126,26],[\"2018-09-29\",5742,3,62,12],[\"2018-09-30\",6195,6,55,16],[\"2018-10-01\",4880,12,32,8],[\"2018-10-02\",4544,4,15,4],[\"2018-10-03\",4083,3,28,8],[\"2018-10-04\",4229,4,24,9],[\"2018-10-05\",4417,6,57,12],[\"2018-10-06\",4681,7,30,13],[\"2018-10-07\",8025,38,312,36],[\"2018-10-08\",9819,57,412,44],[\"2018-10-09\",7307,16,160,19],[\"2018-10-10\",7721,42,225,23],[\"2018-10-11\",5411,16,89,14],[\"2018-10-12\",4254,8,32,11],[\"2018-10-13\",4564,8,25,8],[\"2018-10-14\",8979,45,326,18],[\"2018-10-15\",7151,18,117,10],[\"2018-10-16\",6466,40,212,16],[\"2018-10-17\",5594,10,100,11],[\"2018-10-18\",4231,6,43,2],[\"2018-10-19\",4013,1,26,5],[\"2018-10-20\",4823,0,29,8]]}";
+
+JsonObject &root = jsonBuffer.parseObject(json);
+
+void parsApi()
+{
+    if (root.success())
+    {
+        JsonArray &columnHeaders = root["columnHeaders"];
+        for (size_t i = 0; i < columnHeaders.size(); i++)
+        {
+            const char *columnType = columnHeaders[i]["columnType"]; // "METRIC"
+            if (strcmp(columnType, "METRIC") == 0)
+            {
+                displayMetric(i, root);
+                delay(5000);
+            }
+        }
+    }
+}
+
 void loop()
 {
-    apiTimer.update();
-    ntpTimer.update();
-    tokenRefreshTimer.update();
-    rebootTimer.update();
+    // apiTimer.update();
+    // ntpTimer.update();
+    // tokenRefreshTimer.update();
+    // rebootTimer.update();
 
-    server.handleClient();
+    // server.handleClient();
+    parsApi();
 }

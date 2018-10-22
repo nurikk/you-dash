@@ -15,3 +15,4 @@ void oauthTokenRefresh();
 void refreshToken();
 JsonObject &getJsonConfig();
 
+void parsApi();
