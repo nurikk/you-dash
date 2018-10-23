@@ -1,6 +1,5 @@
 import requests
 params = {
-    "currency": "USD",
     "ids": "channel==MINE",
     "endDate": "2018-11-01",
     "startDate": "2018-10-01",

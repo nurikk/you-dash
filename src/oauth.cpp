@@ -1,6 +1,8 @@
+#include "oauth.h"
 #include <WString.h>
 #include "utils.h"
 #include <ArduinoJson.h>
+#include <ArduinoLog.h>
 
 // OAUTH2 Basics
 String access_type = "offline";
@@ -31,7 +33,7 @@ String authUrl()
     return URL;
 }
 
-JsonObject& exchange(String authorization_code)
+JsonObject &exchange(String authorization_code)
 {
 
     String postData = "";
@@ -53,7 +55,7 @@ JsonObject& exchange(String authorization_code)
     return postRequest(host, httpsPort, postHeader, postData);
 }
 
-JsonObject& refresh(String refresh_token)
+JsonObject &refresh(String refresh_token)
 {
 
     String postData = "";
@@ -74,7 +76,7 @@ JsonObject& refresh(String refresh_token)
     return postRequest(host, httpsPort, postHeader, postData);
 }
 
-JsonObject& info(String access_token)
+JsonObject &info(String access_token)
 {
     String reqHeader = "";
     reqHeader += ("GET " + info_uri + "?access_token=" + urlencode(access_token) + " HTTP/1.1\r\n");
@@ -84,25 +86,24 @@ JsonObject& info(String access_token)
     return getRequest(host, httpsPort, reqHeader);
 }
 
-// JsonObject& callApi(String access_token)
-// {
-//     // Serial.println("access_token");
-//     // Serial.println(access_token);
-//     //   String postData = "";
-//     //   postData += "{\n  \"values\": [[\"brasel\",\"fink\"]]\n}";
+JsonObject &callApi(String access_token, String start_date, String end_date)
+{
+    const char *apiHost = "youtubeanalytics.googleapis.com";
+    String url = "";
+    url += "/v2/reports?";
+    url += "dimensions=day";
+    url += "&ids=" + urlencode("channel==MINE");
+    url += "&metrics=" + urlencode("views,comments,likes,dislikes");
+    url += "&fields=" + urlencode("columnHeaders,rows");
+    url += "&startDate=" + urlencode(start_date);
+    url += "&endDate=" + urlencode(end_date);
 
-//     //   String postHeader = "";
-//     //   postHeader += ("POST /v4/spreadsheets/" + sheet_id + "/values/" + sheet_range + ":append" + "?valueInputOption=raw" + " HTTP/1.1\r\n");
-//     //   postHeader += ("Host: " + String(sheetsHost) + ":" + String(httpsPort) + "\r\n");
-//     //   postHeader += ("Connection: close\r\n");
-//     //   postHeader += ("Authorization: Bearer " + access_token + "\r\n");
-//     //   postHeader += ("Content-Type: application/json; charset=UTF-8\r\n");
-//     //   postHeader += ("Content-Length: ");
-//     //   postHeader += (postData.length());
-//     //   postHeader += ("\r\n\r\n");
+    String reqHeader = "";
+    reqHeader += ("GET " + url + " HTTP/1.1\r\n");
+    reqHeader += ("Host: " + String(apiHost) + ":" + String(httpsPort) + "\r\n");
+    reqHeader += ("Connection: close\r\n");
+    reqHeader += ("Authorization: Bearer " + access_token + "\r\n");
+    reqHeader += ("\r\n\r\n");
 
-//     //   String result = postRequest(sheetsHost, postHeader, postData);
-
-//     return NULL;
-// }
-
+    return getRequest(apiHost, httpsPort, reqHeader);
+}

@@ -45,15 +45,16 @@ String urlencode(String str)
 JsonObject &request(const char *server, const int port, String data)
 {
 
-    DynamicJsonBuffer jsonBuffer;
+    
 
     WiFiClientSecure client;
     Log.notice("Connecting to: %s:%d\n", server, port);
     if (!client.connect(server, port))
     {
         Log.error("Connection failed\n");
-        return jsonBuffer.createObject();
-        ;
+        const size_t bufferSize = JSON_OBJECT_SIZE(0);
+        DynamicJsonBuffer buff(bufferSize);
+        return buff.createObject();
     }
     Log.trace("Request ->\n%s\n<-\n", data.c_str());
     client.print(data);
@@ -68,6 +69,7 @@ JsonObject &request(const char *server, const int port, String data)
             break;
         }
     }
+    DynamicJsonBuffer jsonBuffer;
     return jsonBuffer.parseObject(client);
 }
 

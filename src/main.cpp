@@ -40,10 +40,6 @@ ESP8266WebServer server(80);
 #define API_REFRESH_INTERVAL 5 * 60 * 1000 // 5 minutes
 
 const size_t configBufferSize = JSON_OBJECT_SIZE(5) + 400;
-const size_t mainApiResponseBufferSize = 31 * JSON_ARRAY_SIZE(5) + JSON_ARRAY_SIZE(30) + JSON_OBJECT_SIZE(2) + 5 * JSON_OBJECT_SIZE(3) + 1120;
-
-DynamicJsonBuffer jsonBuffer(mainApiResponseBufferSize);
-JsonObject &mainApiResponse;
 
 struct Config
 {
@@ -61,7 +57,7 @@ PageBuilder IndexPage("/", {IndexBody});
 
 bool initializationDone = false;
 
-Ticker apiTimer(getJsonData, config.api_update_interval);
+Ticker apiTimer(parsApi, config.api_update_interval);
 Ticker ntpTimer(ntpTick, DEFAULT_NTP_UPDATE_INTEVAL);
 Ticker tokenRefreshTimer(refreshToken, API_REFRESH_INTERVAL);
 Ticker rebootTimer([]() {
@@ -111,7 +107,6 @@ void setupNTP()
 // TODO: display time on display
 void ntpTick()
 {
-    // Serial.println (NTP.getTimeDateString ());
     Log.notice("Got NTP time: %s\n", NTP.getTimeDateString().c_str());
     RSCG12864B.print_string_5x7_xy(0, 0, NTP.getTimeDateString().c_str());
 }
@@ -140,14 +135,15 @@ void displayData(JsonObject &data)
     Log.notice("subscriberCount %l\n", stats["subscriberCount"].as<int>());
     Log.notice("videoCount %l\n", stats["videoCount"].as<int>());
 }
-void getJsonData()
-{
 
-    
-}
 
 void SPIFFSRead()
 {
+    if (!SPIFFS.begin())
+    {
+        Log.error("SPIFFS.begin error\n");
+    }
+
     if (SPIFFS.exists(CONFIG_FILE_NAME))
     {
         Log.notice("Reading config file\n");
@@ -176,7 +172,7 @@ void SPIFFSRead()
     }
     else
     {
-        Serial.println("config file doesn't exist");
+        Log.notice("Config file doesn't exist\n");
     }
 }
 
@@ -241,7 +237,7 @@ void handleFileUpload()
             filename = "/" + filename;
         }
 
-        Log.notice("handleFileUpload Name: %s", filename.c_str());
+        Log.notice("handleFileUpload Name: %s\n", filename.c_str());
         fsUploadFile = SPIFFS.open(filename, "w"); // Open the file for writing in SPIFFS (create if it doesn't exist)
         filename = String();
     }
@@ -271,7 +267,7 @@ void handleFileUpload()
 void handleFileList()
 {
     String path = server.hasArg("dir") ? server.arg("dir") : "/";
-    Log.notice("handleFileList: %s", path.c_str());
+    Log.notice("handleFileList: %s\n", path.c_str());
     Dir dir = SPIFFS.openDir(path);
     path = String();
 
@@ -318,13 +314,13 @@ void handleExchange()
             char output[root.measureLength() + 1];
             root.printTo(output, sizeof(output));
 
-            Log.error("authResponse %s", output);
+            Log.error("authResponse %s\n", output);
             server.send(500, TEXT_JSON, output);
         }
     }
     else
     {
-        server.send(500, TEXT_JSON, "{\"error\": \"authorization_code is requred\"");
+        server.send(500, TEXT_JSON, "{\"error\": \"authorization_code is requred\"}");
     }
 }
 
@@ -335,7 +331,6 @@ void setupHTTPServer()
         JsonObject &root = info(config.access_token);
         char output[root.measureLength() + 1];
         root.printTo(output, sizeof(output));
-
         server.send(200, TEXT_JSON, output);
     });
     server.on("/reboot", HTTP_POST, []() {
@@ -357,7 +352,6 @@ void setupHTTPServer()
     server.on("/config", HTTP_POST, []() {
         config.api_update_interval = atoi(server.arg("api_update_interval").c_str());
         config.timezone = atoi(server.arg("timezone").c_str());
-
         NTP.setTimeZone(config.timezone);
         apiTimer.interval(config.api_update_interval);
         SPIFFSWrite();
@@ -386,26 +380,13 @@ void setup()
 {
     Serial.begin(9600);
     delay(5000);
+
     Log.begin(LOG_LEVEL_VERBOSE, &Serial);
 
     setupI2C();
     RSCG12864B.clear();
-    RSCG12864B.draw_fill_rectangle(0, 50, 5, 64);
-    RSCG12864B.draw_pixel(50, 0);
-
-    // parsApi();
-    return;
-
+    
     Log.notice("Serial ok\n");
-
-    if (SPIFFS.begin())
-    {
-        Log.notice("SPIFFS.begin\n");
-    }
-    else
-    {
-        Log.error("SPIFFS error\n");
-    }
 
     SPIFFSRead();
 
@@ -427,10 +408,10 @@ void setup()
         Log.trace("MDNS responder started\n");
     }
 
-    // apiTimer.start();
+    apiTimer.start();
     // ntpTimer.start();
-    // tokenRefreshTimer.start();
-    // oauthTokenRefresh();
+    tokenRefreshTimer.start();
+    oauthTokenRefresh();
 }
 
 void displayMetric(size_t idx, JsonObject &root)
@@ -460,22 +441,19 @@ void displayMetric(size_t idx, JsonObject &root)
     x = y = preX = preY = 0;
     size_t rowsCount = rows.size();
     String dx = String();
-    RSCG12864B.draw_fill_rectangle(0, 0, 127, 7);
-    RSCG12864B.draw_fill_rectangle(0, 56, 127, 63);
-    RSCG12864B.font_revers_on();
-    RSCG12864B.print_string_5x7_xy(0, 0, name);
-
-    RSCG12864B.print_string_5x7_xy(0, 56, String("min:" + String(minValue)).c_str());
 
     String maxStr = "max:" + String(maxValue);
     int maxYpostion = width - 6 * maxStr.length();
     Log.notice("maxYpostion: %d\n", maxYpostion);
+
+    RSCG12864B.draw_fill_rectangle(0, 0, 127, 7);
+    RSCG12864B.draw_fill_rectangle(0, 56, 127, 63);
+    RSCG12864B.font_revers_on();
+    RSCG12864B.print_string_5x7_xy(0, 0, name);
+    RSCG12864B.print_string_5x7_xy(0, 56, String("min:" + String(minValue)).c_str());
     RSCG12864B.print_string_5x7_xy(maxYpostion, 0, maxStr.c_str());
     RSCG12864B.font_revers_off();
 
-    Log.notice("%s\n", maxStr.c_str());
-
-    // RSCG12864B.print_string_5x7_xy(0, 54, minValue);
     for (size_t row = 0; row < rowsCount; row++)
     {
         int mappedValue = map(rows[row][idx], minValue, maxValue, 0, height);
@@ -508,12 +486,9 @@ void displayMetric(size_t idx, JsonObject &root)
 }
 
 
-const char *json = "{\"columnHeaders\":[{\"name\":\"day\",\"columnType\":\"DIMENSION\",\"dataType\":\"STRING\"},{\"name\":\"views\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"},{\"name\":\"comments\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"},{\"name\":\"likes\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"},{\"name\":\"dislikes\",\"columnType\":\"METRIC\",\"dataType\":\"INTEGER\"}],\"rows\":[[\"2018-09-21\",11806,13,170,24],[\"2018-09-22\",11846,6,86,20],[\"2018-09-23\",12929,37,241,26],[\"2018-09-24\",11531,22,137,21],[\"2018-09-25\",12315,28,293,27],[\"2018-09-26\",8258,10,127,19],[\"2018-09-27\",11124,59,371,33],[\"2018-09-28\",7945,16,126,26],[\"2018-09-29\",5742,3,62,12],[\"2018-09-30\",6195,6,55,16],[\"2018-10-01\",4880,12,32,8],[\"2018-10-02\",4544,4,15,4],[\"2018-10-03\",4083,3,28,8],[\"2018-10-04\",4229,4,24,9],[\"2018-10-05\",4417,6,57,12],[\"2018-10-06\",4681,7,30,13],[\"2018-10-07\",8025,38,312,36],[\"2018-10-08\",9819,57,412,44],[\"2018-10-09\",7307,16,160,19],[\"2018-10-10\",7721,42,225,23],[\"2018-10-11\",5411,16,89,14],[\"2018-10-12\",4254,8,32,11],[\"2018-10-13\",4564,8,25,8],[\"2018-10-14\",8979,45,326,18],[\"2018-10-15\",7151,18,117,10],[\"2018-10-16\",6466,40,212,16],[\"2018-10-17\",5594,10,100,11],[\"2018-10-18\",4231,6,43,2],[\"2018-10-19\",4013,1,26,5],[\"2018-10-20\",4823,0,29,8]]}";
-
-JsonObject &root = jsonBuffer.parseObject(json);
-
 void parsApi()
 {
+    JsonObject &root = callApi(config.access_token, "2018-09-21", "2018-10-22");
     if (root.success())
     {
         JsonArray &columnHeaders = root["columnHeaders"];
@@ -531,11 +506,10 @@ void parsApi()
 
 void loop()
 {
-    // apiTimer.update();
+    apiTimer.update();
     // ntpTimer.update();
-    // tokenRefreshTimer.update();
-    // rebootTimer.update();
+    tokenRefreshTimer.update();
+    rebootTimer.update();
 
-    // server.handleClient();
-    parsApi();
+    server.handleClient();
 }
