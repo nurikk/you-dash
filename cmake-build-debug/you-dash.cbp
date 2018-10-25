@@ -1,0 +1,1556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="you-dash"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="you-dash">
+				<Option output="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/you-dash" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/tools/sdk/include"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/tools/sdk/libc/xtensa-lx106-elf/include"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/cores/esp8266"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/tools/sdk/lwip/include"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/variants/d1_mini"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/RSCG12864B"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SPI"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Ethernet/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WebServer/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/DNSServer/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPClient/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266mDNS"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Wire"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/src"/>
+					<Add directory="/Users/nur/.platformio/lib/ESP8266_ID127"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ArduinoOTA"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/EEPROM"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266AVRISP/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPUpdateServer/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266LLMNR"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266NetBIOS"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266SSDP"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFiMesh/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266httpUpdate/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/GDBStub/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Hash/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SD/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SPISlave/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Servo/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SoftwareSerial"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/TFT_Touch_Shield_V2"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Ticker"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/esp8266/src"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/xtensa-lx106-elf/include"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/xtensa-lx106-elf/include/c++/4.8.2"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/lib/gcc/xtensa-lx106-elf/4.8.2/include"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/lib/gcc/xtensa-lx106-elf/4.8.2/include-fixed"/>
+					<Add directory="/Users/nur/.platformio/packages/tool-unity"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 you-dash"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="you-dash/fast">
+				<Option output="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/you-dash" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/tools/sdk/include"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/tools/sdk/libc/xtensa-lx106-elf/include"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/cores/esp8266"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/tools/sdk/lwip/include"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/variants/d1_mini"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/RSCG12864B"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SPI"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Ethernet/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WebServer/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/DNSServer/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPClient/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266mDNS"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Wire"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src"/>
+					<Add directory="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/src"/>
+					<Add directory="/Users/nur/.platformio/lib/ESP8266_ID127"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ArduinoOTA"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/EEPROM"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266AVRISP/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266HTTPUpdateServer/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266LLMNR"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266NetBIOS"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266SSDP"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFiMesh/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266httpUpdate/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/GDBStub/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Hash/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SD/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SPISlave/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Servo/src"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/SoftwareSerial"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/TFT_Touch_Shield_V2"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/Ticker"/>
+					<Add directory="/Users/nur/.platformio/packages/framework-arduinoespressif8266/libraries/esp8266/src"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/xtensa-lx106-elf/include"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/xtensa-lx106-elf/include/c++/4.8.2"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/lib/gcc/xtensa-lx106-elf/4.8.2/include"/>
+					<Add directory="/Users/nur/.platformio/packages/toolchain-xtensa/lib/gcc/xtensa-lx106-elf/4.8.2/include-fixed"/>
+					<Add directory="/Users/nur/.platformio/packages/tool-unity"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 you-dash/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_REBUILD_PROJECT_INDEX">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_REBUILD_PROJECT_INDEX"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_UPDATE_ALL">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_UPDATE_ALL"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_UPLOADFS">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_UPLOADFS"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_BUILD">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_BUILD"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_PROGRAM">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_PROGRAM"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_TEST">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_TEST"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_CLEAN">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_CLEAN"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="PLATFORMIO_UPLOAD">
+				<Option working_dir="/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 PLATFORMIO_UPLOAD"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/nur/Documents/PlatformIO/Projects/you-dash/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/.DS_Store">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.DS_Store">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.clang-format">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.gitattributes">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.github/ISSUE_TEMPLATE.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.gitignore">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.mbedignore">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/.travis.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/ArduinoJson.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/CHANGELOG.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/CMakeLists.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/CONTRIBUTING.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/LICENSE.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/SUPPORT.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/appveyor.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/banner.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/JsonConfigFile/JsonConfigFile.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/JsonGeneratorExample/JsonGeneratorExample.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/JsonHttpClient/JsonHttpClient.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/JsonParserExample/JsonParserExample.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/JsonServer/JsonServer.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/JsonUdpBeacon/JsonUdpBeacon.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/ProgmemExample/ProgmemExample.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/examples/StringExample/StringExample.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/.DS_Store">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Configuration.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/Encoding.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonBufferAllocated.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonFloat.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonInteger.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonVariantAs.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonVariantContent.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonVariantDefault.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/JsonVariantType.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/List.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/ListConstIterator.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/ListIterator.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/ListNode.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/NonCopyable.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/ReferenceType.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Data/ValueSaver.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Deserialization/Comments.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Deserialization/JsonParser.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Deserialization/JsonParserImpl.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Deserialization/StringWriter.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/DynamicJsonBuffer.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonArray.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonArrayImpl.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonArraySubscript.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonBuffer.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonBufferBase.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonBufferImpl.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonObject.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonObjectImpl.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonObjectSubscript.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonPair.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariant.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariantBase.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariantCasts.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariantComparisons.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariantImpl.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariantOr.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/JsonVariantSubscripts.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/attributes.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/ctype.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/isFloat.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/isInteger.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/math.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/parseFloat.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Polyfills/parseInteger.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/RawJson.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/DummyPrint.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/DynamicStringBuilder.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/FloatParts.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/IndentedPrint.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/JsonPrintable.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/JsonSerializer.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/JsonSerializerImpl.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/JsonWriter.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/Prettyfier.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/StaticStringBuilder.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/Serialization/StreamPrintAdapter.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StaticJsonBuffer.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StringTraits/ArduinoStream.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StringTraits/CharPointer.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StringTraits/FlashString.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StringTraits/StdStream.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StringTraits/StdString.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/StringTraits/StringTraits.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/EnableIf.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/FloatTraits.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsArray.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsBaseOf.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsChar.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsConst.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsFloatingPoint.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsIntegral.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsSame.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsSignedIntegral.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsUnsignedIntegral.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/IsVariant.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/RemoveConst.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/TypeTraits/RemoveReference.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoJson_ID64/src/ArduinoJson/version.hpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/.travis.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/ArduinoLog.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/ArduinoLog.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/LICENSE.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/examples/Log/Log.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/ArduinoLog_ID1532/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/.gitattributes">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/.gitignore">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/.travis.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/404.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/advancedusage/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/api/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/images/favicon.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/images/icons/bitbucket.4ebea66e.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/images/icons/github.a4034fb1.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/images/icons/gitlab.348cdb3a.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/application.8eb9be28.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.da.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.de.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.du.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.es.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.fi.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.fr.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.hu.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.it.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.jp.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.multi.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.no.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.pt.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.ro.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.ru.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.stemmer.support.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.sv.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/lunr.tr.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/lunr/tinyseg.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/javascripts/modernizr.1aa3b519.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/stylesheets/application-palette.6079476c.css">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/assets/stylesheets/application.78aab2dc.css">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/basicusage/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/changelog/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/css/paragraph.css">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/examples/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/faq/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/gettingstarted/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/APIKeys.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/BeforeAfter.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ChannelID.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ChannelStatus.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/CreateChannel.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/PageBuilder.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/USERKey.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ac.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ac2.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/arduino-logo.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/arrow_right.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/arrow_right.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/beforeafter.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/begin.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/config_ssid.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/confignew.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/cp.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/declare.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/espshaker.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/established.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/gitrepo.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/handleClient.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/handleClient.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/handlePortal.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/hello_world.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/include.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ins_lib.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/lm.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/logic_sequence.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/login.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/login_ani.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/menu.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/menu_home.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/menu_login.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/menu_login.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/menu_r.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/newap.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/open.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/openssid.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ov.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ov.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/ov.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/reset.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/reset_r.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/resetting.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/serial.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/stat.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/images/statistics.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/js/gifffer.min.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/license/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/menu/index.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/search/search_index.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/docs/sitemap.xml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/Credential/Credential.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/FSBrowser.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/edit.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/edit.htm.gz">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/favicon.ico">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/graphs.js.gz">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/index.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/sub1/edit.htm/edit.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/FSBrowser/data/sub2/index.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/HandleClient/HandleClient.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/HandlePortal/HandlePortal.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/HandlePortalEX/HandlePortalEX.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/Simple/Simple.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/examples/mqttRSSI/mqttRSSI.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/advancedusage.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/api.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/basicusage.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/changelog.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/css/paragraph.css">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/examples.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/faq.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/gettingstarted.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/APIKeys.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/BeforeAfter.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ChannelID.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ChannelStatus.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/CreateChannel.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/PageBuilder.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/USERKey.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ac.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ac2.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/arduino-logo.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/arrow_right.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/arrow_right.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/beforeafter.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/begin.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/config_ssid.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/confignew.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/cp.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/declare.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/espshaker.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/established.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/gitrepo.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/handleClient.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/handleClient.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/handlePortal.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/hello_world.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/include.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ins_lib.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/lm.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/logic_sequence.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/login.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/login_ani.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/menu.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/menu_home.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/menu_login.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/menu_login.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/menu_r.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/newap.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/open.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/openssid.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ov.gif">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ov.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/ov.svg">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/reset.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/reset_r.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/resetting.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/serial.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/stat.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/images/statistics.png">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/index.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/js/gifffer.min.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/license.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/mkdocs/menu.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src/AutoConnect.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src/AutoConnect.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src/AutoConnectCredential.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src/AutoConnectCredential.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src/AutoConnectPage.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/AutoConnect_ID2678/src/AutoConnectPage.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/LICENSE.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf01Minimal/IotWebConf01Minimal.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf02StatusAndReset/IotWebConf02StatusAndReset.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf03CustomParameters/IotWebConf03CustomParameters.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf04UpdateServer/IotWebConf04UpdateServer.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf05Callbacks/IotWebConf05Callbacks.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf06MqttApp/IotWebConf06MqttApp.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf07MqttRelay/IotWebConf07MqttRelay.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/examples/IotWebConf08WebRelay/IotWebConf08WebRelay.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/src/IotWebConf.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/IotWebConf_ID5676/src/IotWebConf.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/.DS_Store">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/.gitattributes">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/.gitignore">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/Diagrama de estados.graphml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/LICENSE.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/examples/NTPClientAvr/NTPClientAvr.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/examples/NTPClientBasic/NTPClientBasic.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/examples/NTPClientESP32/NTPClientESP32.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/examples/NTPClientESP8266/NTPClientESP8266.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/examples/NTPClientESP8266/WifiConfig.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/examples/NTPClientMKR1000/NTPClientMKR1000.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/src/NTPClientLib.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/src/NTPClientLib.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/NtpClientLib_ID727/src/NtpClientLib.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/.gitattributes">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/.gitignore">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/.travis.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/DynamicPage/DynamicPage.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/FSPage/FSPage.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/FSPage/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/FSPage/data/connect.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/FSPage/data/entry.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/FSPage/data/failed.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/FSPage/data/root.htm">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/SendNakedHttp/SendNakedHttp.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/WebLED/WebLED.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/WebLED/WebLED.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/examples/WebPageHello/WebPageHello.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/src/PageBuilder.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/PageBuilder_ID2010/src/PageBuilder.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/Ticker.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/Ticker.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/examples/Ticker/Ticker.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Ticker_ID1586/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/.piopkgmanager.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/applypatch-msg.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/commit-msg.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/fsmonitor-watchman.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/post-update.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/pre-applypatch.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/pre-commit.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/pre-push.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/pre-rebase.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/pre-receive.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/prepare-commit-msg.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/.git/hooks/update.sample">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/DateStrings.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/Readme.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/Time.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/Time.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/TimeLib.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/docs/issue_template.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/Processing/SyncArduinoClock/SyncArduinoClock.pde">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/Processing/SyncArduinoClock/readme.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeArduinoDue/TimeArduinoDue.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeGPS/TimeGPS.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeNTP/TimeNTP.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeNTP_ENC28J60/TimeNTP_ENC28J60.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeNTP_ESP8266WiFi/TimeNTP_ESP8266WiFi.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeRTC/TimeRTC.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeRTCLog/TimeRTCLog.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeRTCSet/TimeRTCSet.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeSerial/TimeSerial.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeSerialDateStrings/TimeSerialDateStrings.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/examples/TimeTeensy3/TimeTeensy3.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/Time/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/.github/CONTRIBUTING.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/.github/ISSUE_TEMPLATE.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/.library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/.travis.yml">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/README.md">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/WiFiManager.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/WiFiManager.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnect/AutoConnect.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithFSParameters/AutoConnectWithFSParameters.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithFSParametersAndCustomIP/AutoConnectWithFSParametersAndCustomIP.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithFeedback/AutoConnectWithFeedback.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithFeedbackLED/AutoConnectWithFeedbackLED.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithReset/AutoConnectWithReset.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithStaticIP/AutoConnectWithStaticIP.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/AutoConnectWithTimeout/AutoConnectWithTimeout.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/examples/OnDemandConfigPortal/OnDemandConfigPortal.ino">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/extras/WiFiManager.template.html">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/extras/parse.js">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/extras/template.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/keywords.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/library.json">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/library.properties">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/.piolibdeps/WifiManager_ID567/travis/common.sh">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/.DS_Store">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/RSCG12864B/RSCG12864B.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/RSCG12864B/RSCG12864B.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/RSCG12864B/utility/I2C.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/RSCG12864B/utility/I2C.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/lib/readme.txt">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/src/main.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/src/main.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/src/oauth.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/src/oauth.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/src/utils.cpp">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/src/utils.h">
+			<Option target="you-dash"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/nur/Documents/PlatformIO/Projects/you-dash/CMakeListsPrivate.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

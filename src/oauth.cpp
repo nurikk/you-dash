@@ -33,7 +33,7 @@ String authUrl()
     return URL;
 }
 
-JsonObject &exchange(String authorization_code)
+JsonObject &exchange(String authorization_code, DynamicJsonBuffer *jsonBuffer)
 {
 
     String postData = "";
@@ -52,10 +52,10 @@ JsonObject &exchange(String authorization_code)
     postHeader += (postData.length());
     postHeader += ("\r\n\r\n");
 
-    return postRequest(host, httpsPort, postHeader, postData);
+    return postRequest(host, httpsPort, postHeader, postData, jsonBuffer);
 }
 
-JsonObject &refresh(String refresh_token)
+JsonObject &refresh(String refresh_token, DynamicJsonBuffer *jsonBuffer)
 {
 
     String postData = "";
@@ -73,20 +73,20 @@ JsonObject &refresh(String refresh_token)
     postHeader += (postData.length());
     postHeader += ("\r\n\r\n");
 
-    return postRequest(host, httpsPort, postHeader, postData);
+    return postRequest(host, httpsPort, postHeader, postData, jsonBuffer);
 }
 
-JsonObject &info(String access_token)
+JsonObject &info(String access_token, DynamicJsonBuffer *jsonBuffer)
 {
     String reqHeader = "";
     reqHeader += ("GET " + info_uri + "?access_token=" + urlencode(access_token) + " HTTP/1.1\r\n");
     reqHeader += ("Host: " + String(host) + ":" + String(httpsPort) + "\r\n");
     reqHeader += ("Connection: close\r\n");
     reqHeader += ("\r\n\r\n");
-    return getRequest(host, httpsPort, reqHeader);
+    return getRequest(host, httpsPort, reqHeader, jsonBuffer);
 }
 
-JsonObject &callApi(String access_token, String start_date, String end_date)
+JsonObject &callApi(String access_token, String start_date, String end_date, DynamicJsonBuffer *jsonBuffer)
 {
     const char *apiHost = "youtubeanalytics.googleapis.com";
     String url = "";
@@ -104,6 +104,5 @@ JsonObject &callApi(String access_token, String start_date, String end_date)
     reqHeader += ("Connection: close\r\n");
     reqHeader += ("Authorization: Bearer " + access_token + "\r\n");
     reqHeader += ("\r\n\r\n");
-
-    return getRequest(apiHost, httpsPort, reqHeader);
+    return getRequest(apiHost, httpsPort, reqHeader, jsonBuffer);
 }

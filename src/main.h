@@ -1,18 +1,12 @@
-
-
-
 #include <ArduinoJson.h>
-
-void getJsonData();
-void ntpTick();
 void setupNTP();
-void saveConfigCallback();
-void getJsonData();
 void SPIFFSRead();
 void SPIFFSWrite();
 void setupWifi();
-void oauthTokenRefresh();
+void validateAccessToken();
 void refreshToken();
 JsonObject &getJsonConfig();
 
 void parsApi();
+void renderScreen();
+void displayMetric(size_t idx);

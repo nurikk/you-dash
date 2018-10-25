@@ -42,19 +42,15 @@ String urlencode(String str)
     return encodedString;
 }
 
-JsonObject &request(const char *server, const int port, String data)
+JsonObject &request(const char *server, const int port, String data, DynamicJsonBuffer *jsonBuffer)
 {
-
-    
-
+    jsonBuffer->clear();
     WiFiClientSecure client;
     Log.notice("Connecting to: %s:%d\n", server, port);
     if (!client.connect(server, port))
     {
         Log.error("Connection failed\n");
-        const size_t bufferSize = JSON_OBJECT_SIZE(0);
-        DynamicJsonBuffer buff(bufferSize);
-        return buff.createObject();
+        return jsonBuffer->createObject();
     }
     Log.trace("Request ->\n%s\n<-\n", data.c_str());
     client.print(data);
@@ -69,22 +65,23 @@ JsonObject &request(const char *server, const int port, String data)
             break;
         }
     }
-    DynamicJsonBuffer jsonBuffer;
-    return jsonBuffer.parseObject(client);
+
+    return jsonBuffer->parseObject(client);
 }
 
-JsonObject &postRequest(const char *server, const int port, String header, String data)
+JsonObject &postRequest(const char *server, const int port, String header, String data, DynamicJsonBuffer *jsonBuffer)
 {
-    Log.notice("Calling postRequest\n");
-    JsonObject &resp = request(server, port, header + data);
-    Log.notice("End calling postRequest\n");
-    resp.prettyPrintTo(Serial);
-    return resp;
+    return request(server, port, header + data, jsonBuffer);
 }
 
-JsonObject &getRequest(const char *server, const int port, String data)
+JsonObject &getRequest(const char *server, const int port, String data, DynamicJsonBuffer *jsonBuffer)
 {
-    JsonObject &resp = request(server, port, data);
-    resp.prettyPrintTo(Serial);
-    return resp;
+    return request(server, port, data, jsonBuffer);
+}
+
+time_t DatePlusDays(time_t startTime, int days)
+{
+    const time_t ONE_DAY = 24 * 60 * 60;
+
+    return startTime + (days * ONE_DAY);
 }
