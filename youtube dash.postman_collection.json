@@ -9,7 +9,33 @@
 			"name": "Get config (memory)",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36",
+						"type": "text"
+					},
+					{
+						"key": "Referer",
+						"value": " http://10.0.0.20/",
+						"type": "text"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": " */*",
+						"type": "text"
+					},
+					{
+						"key": "DNT",
+						"value": "1",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -22,6 +48,28 @@
 					],
 					"path": [
 						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "oauth token info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{dash_ip}}/token",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"token"
 					]
 				}
 			},
@@ -157,7 +205,7 @@
 					"formdata": [
 						{
 							"key": "authorization_code",
-							"value": "sadasd",
+							"value": "4/fgAawulhB6Y9voQ5UjZK9RxUB6h39uwKd3Em2pz3bQitz-C5KTHVgds",
 							"type": "text"
 						}
 					]
@@ -191,27 +239,69 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "access_token",
-							"value": "!access_token!",
-							"type": "text"
-						},
-						{
 							"key": "api_update_interval",
-							"value": "5000",
+							"value": "60000",
 							"type": "text"
 						},
 						{
 							"key": "timezone",
-							"value": "8",
-							"type": "text"
-						},
-						{
-							"key": "channel_id",
-							"value": "ezhov-tv",
+							"value": "10",
 							"type": "text"
 						}
 					]
 				},
+				"url": {
+					"raw": "http://{{dash_ip}}/config",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"config"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reboot device",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{dash_ip}}/reboot",
+					"protocol": "http",
+					"host": [
+						"{{dash_ip}}"
+					],
+					"path": [
+						"reboot"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete SPIFFS config",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://{{dash_ip}}/config",
 					"protocol": "http",
@@ -257,7 +347,7 @@
 	],
 	"variable": [
 		{
-			"id": "295eb3cc-57a3-4132-b94a-5d201cb7c696",
+			"id": "5ddbef27-8232-4654-a8c4-8914b36702f9",
 			"key": "dash_ip",
 			"value": "10.0.0.20",
 			"type": "string"

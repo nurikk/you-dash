@@ -12,6 +12,20 @@
 </head>
 
 <body>
+    <div id="oauth-setup">
+        <form>
+            <div class="form-group">
+                <label for="client_id">Oauth client id</label>
+                <input required type="text" class="form-control" id="client_id" name="client_id" placeholder="Enter oauth client id">
+            </div>
+
+            <div class="form-group">
+                <label for="client_secret">Oauth client secret</label>
+                <input required type="text" class="form-control" id="client_secret" name="client_secret" placeholder="Enter oauth client secret">
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+    </div>
     <div id="auth">
         <a target="_blank" href="/auth">Click here</a>
         <form>
@@ -25,21 +39,24 @@
     <div id="config">
         <form>
             <div class="form-group">
-                <label for="key">api_update_interval</label>
-                <input required type="number" class="form-control" name="api_update_interval" placeholder="Enter api update interval">
+                <label for="api_update_interval">api_update_interval</label>
+                <input id="api_update_interval" required type="number" class="form-control" name="api_update_interval"
+                    placeholder="Enter api update interval">
             </div>
 
             <div class="form-group">
-                <label for="key">timezone</label>
-                <input required type="number" class="form-control" name="timezone" placeholder="Enter timezone">
+                <label for="timezone">timezone</label>
+                <input id="timezone" required type="number" class="form-control" name="timezone" placeholder="Enter timezone">
             </div>
 
             <button type="submit" class="btn btn-primary">Update config</button>
         </form>
     </div>
+    <button id="reset" type="button" class="btn btn-danger">Clear config</button>
+    <button id="reboot" type="button" class="btn btn-danger">Reboot</button>
+
     <script>
         var hiddenClass = "d-none";
-
         var intiConfigForm = function (config) {
             $("#config").removeClass(hiddenClass);
             $("#config input").each(function (idx, el) {
@@ -50,9 +67,11 @@
         };
 
         var init = function () {
-            $("#auth,#config").addClass(hiddenClass);
+            $("#auth,#config,#oauth-setup").addClass(hiddenClass);
             $.get("/config", function (config) {
-                if (!config['access_token']) {
+                if (!config['client_id']) {
+                    $('#oauth-setup').removeClass(hiddenClass);
+                } else if (!config['access_token']) {
                     $('#auth').removeClass(hiddenClass);
                 } else {
                     intiConfigForm(config);
@@ -74,6 +93,7 @@
         };
 
         var onConfigSubmit = function (e) {
+            debugger
             e.preventDefault();
             $.ajax({
                 type: "POST",
@@ -83,10 +103,26 @@
             });
         };
 
+        var reboot = function () {
+            $.ajax({
+                type: "POST",
+                url: "/reboot"
+            });
+        };
+
+        var reset = function () {
+            $.ajax({
+                type: "DELETE",
+                url: "/config"
+            });
+        };
+
         $(function () {
             init();
             $("body").on("submit", "#auth form", onAuthSubmit);
-            $("body").on("submit", "#config form", onConfigSubmit);
+            $("body").on("submit", "#config form,#oauth-setup form", onConfigSubmit);
+            $('body').on("click", "#reboot", reboot);
+            $('body').on("click", "#reset", reset);
 
         });
     </script>

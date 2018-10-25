@@ -14,14 +14,10 @@ String token_uri = "/oauth2/v4/token";
 
 String scope = "https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube";
 
-// OAUTH2 Client credentials
-String client_id = "363468596642-s7qhf77ud5hjc5mn3r2b9fllouuu4epp.apps.googleusercontent.com";
-String client_secret = "2n2y0mVLt-tgr-tLrsjpqE0W";
-
 const char *host = "www.googleapis.com";
 const int httpsPort = 443;
 
-String authUrl()
+String authUrl(String client_id, String client_secret)
 {
     String URL;
     URL = auth_uri + "?";
@@ -33,7 +29,7 @@ String authUrl()
     return URL;
 }
 
-JsonObject &exchange(String authorization_code, DynamicJsonBuffer *jsonBuffer)
+JsonObject &exchange(String authorization_code, String client_id, String client_secret, DynamicJsonBuffer *jsonBuffer)
 {
 
     String postData = "";
@@ -55,7 +51,7 @@ JsonObject &exchange(String authorization_code, DynamicJsonBuffer *jsonBuffer)
     return postRequest(host, httpsPort, postHeader, postData, jsonBuffer);
 }
 
-JsonObject &refresh(String refresh_token, DynamicJsonBuffer *jsonBuffer)
+JsonObject &refresh(String refresh_token, String client_id, String client_secret, DynamicJsonBuffer *jsonBuffer)
 {
 
     String postData = "";
@@ -97,6 +93,23 @@ JsonObject &callApi(String access_token, String start_date, String end_date, Dyn
     url += "&fields=" + urlencode("columnHeaders,rows");
     url += "&startDate=" + urlencode(start_date);
     url += "&endDate=" + urlencode(end_date);
+
+    String reqHeader = "";
+    reqHeader += ("GET " + url + " HTTP/1.1\r\n");
+    reqHeader += ("Host: " + String(apiHost) + ":" + String(httpsPort) + "\r\n");
+    reqHeader += ("Connection: close\r\n");
+    reqHeader += ("Authorization: Bearer " + access_token + "\r\n");
+    reqHeader += ("\r\n\r\n");
+    return getRequest(apiHost, httpsPort, reqHeader, jsonBuffer);
+}
+
+JsonObject &getChannelStats(String access_token, DynamicJsonBuffer *jsonBuffer)
+{
+    const char *apiHost = "content.googleapis.com";
+    String url = "";
+    url += "/youtube/v3/channels?";
+    url += "mine=true";
+    url += "&part=statistics";
 
     String reqHeader = "";
     reqHeader += ("GET " + url + " HTTP/1.1\r\n");

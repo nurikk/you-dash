@@ -25,17 +25,19 @@ ESP8266WebServer server(80);
 #define CONFIG_FILE_NAME "/config.json"
 #define ACCESS_POINT_NAME "Youtube dashboard"
 #define MDNS_DOMAIN "you-dash"
-#define API_HOST "content.googleapis.com"
-#define API_URL "/youtube/v3/channels?id=%s&part=statistics&key=%s"
 #define SSD_NAME "Youtube dashboard"
 
 #define API_REFRESH_INTERVAL 5 * 60 * 1000 // 5 minutes
 
 struct Config
 {
+    char client_id[100] = "";
+    char client_secret[100] = "";
+
     char access_token[150] = "";
     char refresh_token[50] = "";
-    int api_update_interval = 5000;
+
+    int api_update_interval = API_REFRESH_INTERVAL;
     int timezone = 12;
 };
 
@@ -45,6 +47,10 @@ const size_t mainApiResponseBufferSize =
     31 * JSON_ARRAY_SIZE(5) + JSON_ARRAY_SIZE(30) + JSON_OBJECT_SIZE(2) + 5 * JSON_OBJECT_SIZE(3) + 1320;
 DynamicJsonBuffer mainApiResponseBuffer(mainApiResponseBufferSize);
 JsonObject *mainApiResponse;
+
+const size_t channelStatsResponseBufferSizes = JSON_ARRAY_SIZE(1) + JSON_OBJECT_SIZE(2) + 2 * JSON_OBJECT_SIZE(4) + JSON_OBJECT_SIZE(5) + 410;
+DynamicJsonBuffer channelStatsResponseBuffer(channelStatsResponseBufferSizes);
+JsonObject *channelStats;
 
 size_t currentScreen = 0;
 
@@ -61,7 +67,7 @@ void refreshToken()
 {
     Log.trace("Refresh token\n");
     DynamicJsonBuffer jsonBuffer(255);
-    JsonObject &refresh_data = refresh(config.refresh_token, &jsonBuffer);
+    JsonObject &refresh_data = refresh(config.refresh_token, config.client_id, config.client_secret, &jsonBuffer);
     if (refresh_data.success() && refresh_data.containsKey("access_token"))
     {
         strlcpy(config.access_token, refresh_data["access_token"], sizeof(config.access_token));
@@ -76,13 +82,21 @@ void refreshToken()
         RSCG12864B.clear();
         RSCG12864B.print_string_5x7_xy(0, 0, refresh_data["error"]);
         RSCG12864B.print_string_5x7_xy(0, 20, refresh_data["error_description"]);
-        
     }
 }
 
 void validateAccessToken()
 {
     Log.trace("validateAccessToken\n");
+
+    if (strlen(config.access_token) == 0)
+    {
+        RSCG12864B.clear();
+        RSCG12864B.print_string_5x7_xy(0, 0, "no token info");
+        RSCG12864B.print_string_5x7_xy(0, 12, String(String("http://") + WiFi.localIP().toString()).c_str());
+        return;
+    }
+
     const size_t bufferSize = JSON_OBJECT_SIZE(6) + 340;
     DynamicJsonBuffer jsonBuffer(bufferSize);
     JsonObject &root = info(config.access_token, &jsonBuffer);
@@ -91,6 +105,7 @@ void validateAccessToken()
     {
         int expires = root["expires_in"].as<int>();
         tokenRefreshTimer.interval(1000 * expires);
+        tokenRefreshTimer.start();
 
         parsApi();
     }
@@ -107,8 +122,42 @@ void setupNTP()
     NTP.setTimeZone(config.timezone);
 }
 
+void displayChannelStats()
+{
+    RSCG12864B.clear();
+    if (channelStats->success() && channelStats->containsKey("items"))
+    {
+        JsonArray &items = channelStats->get<JsonArray>("items");
+        if (items.size() > 0)
+        {
+            JsonObject &stats = items[0]["statistics"];
+
+            char viewCount[50];
+            sprintf(viewCount, "views: %d", stats["viewCount"].as<int>());
+            RSCG12864B.print_string_5x7_xy(0, 10, viewCount);
+
+            char subscriberCount[50];
+            sprintf(subscriberCount, "subscribers: %d", stats["subscriberCount"].as<int>());
+            RSCG12864B.print_string_5x7_xy(0, 30, subscriberCount);
+
+            char videoCount[50];
+            sprintf(videoCount, "videos: %d", stats["videoCount"].as<int>());
+            RSCG12864B.print_string_5x7_xy(0, 40, videoCount);
+
+            Log.notice("viewCount %l\n", stats["viewCount"].as<int>());
+            Log.notice("commentCount %l\n", stats["commentCount"].as<int>());
+            Log.notice("subscriberCount %l\n", stats["subscriberCount"].as<int>());
+            Log.notice("videoCount %l\n", stats["videoCount"].as<int>());
+        }
+    }
+}
+
 void renderScreen()
 {
+    if (mainApiResponse->get<JsonArray>("rows").size() == 0)
+    {
+        return Log.error("nothing to render\n");
+    }
     JsonArray &columnHeaders = mainApiResponse->get<JsonArray>("columnHeaders");
     if (currentScreen >= columnHeaders.size())
     {
@@ -124,8 +173,7 @@ void renderScreen()
     }
     else
     {
-        RSCG12864B.clear();
-        RSCG12864B.print_string_5x7_xy(0, 10, "Draw something else");
+        displayChannelStats();
     }
     currentScreen++;
 }
@@ -184,11 +232,35 @@ void SPIFFSRead()
 
             json.prettyPrintTo(Serial);
 
-            strlcpy(config.access_token, json["access_token"], sizeof(config.access_token));
-            strlcpy(config.refresh_token, json["refresh_token"], sizeof(config.refresh_token));
-            config.api_update_interval = json["api_update_interval"].as<int>();
-            config.timezone = json["timezone"].as<int>();
-            apiTimer.interval(config.api_update_interval);
+            if (json.containsKey("access_token"))
+            {
+                strlcpy(config.access_token, json["access_token"], sizeof(config.access_token));
+            }
+            if (json.containsKey("refresh_token"))
+            {
+                strlcpy(config.refresh_token, json["refresh_token"], sizeof(config.refresh_token));
+            }
+
+            if (json.containsKey("client_id"))
+            {
+                strlcpy(config.client_id, json["client_id"], sizeof(config.client_id));
+            }
+
+            if (json.containsKey("client_secret"))
+            {
+                strlcpy(config.client_secret, json["client_secret"], sizeof(config.client_secret));
+            }
+
+            if (json.containsKey("api_update_interval"))
+            {
+                config.api_update_interval = json["api_update_interval"].as<int>();
+                apiTimer.interval(config.api_update_interval);
+            }
+
+            if (json.containsKey("timezone"))
+            {
+                config.timezone = json["timezone"].as<int>();
+            }
         }
     }
     else
@@ -205,6 +277,9 @@ JsonObject &getJsonConfig()
     json["refresh_token"] = config.refresh_token;
     json["api_update_interval"] = config.api_update_interval;
     json["timezone"] = config.timezone;
+
+    json["client_id"] = config.client_id;
+    json["client_secret"] = config.client_secret;
     return json;
 }
 
@@ -228,7 +303,8 @@ void setupWifi()
 {
     WiFiManager wifiManager;
     wifiManager.setMinimumSignalQuality();
-
+    RSCG12864B.clear();
+    RSCG12864B.print_string_5x7_xy(0, 35, "Connecting to WiFi...");
     if (!wifiManager.autoConnect(ACCESS_POINT_NAME))
     {
         Log.error("Failed to connect and hit timeout\n");
@@ -322,7 +398,7 @@ void handleExchange()
         String authorization_code = server.arg("authorization_code");
         Log.notice("authorization_code: %s\n", authorization_code.c_str());
         DynamicJsonBuffer jsonBuffer(255);
-        JsonObject &root = exchange(authorization_code, &jsonBuffer);
+        JsonObject &root = exchange(authorization_code, config.client_id, config.client_secret, &jsonBuffer);
 
         if (root.success() && !root.containsKey("error"))
         {
@@ -369,13 +445,35 @@ void setupHTTPServer()
 
     server.on("/config", HTTP_POST, []() {
         Log.notice("Upload new config\n");
-        config.api_update_interval = atoi(server.arg("api_update_interval").c_str());
-        config.timezone = atoi(server.arg("timezone").c_str());
-        NTP.setTimeZone(config.timezone);
-        apiTimer.interval(config.api_update_interval);
+        if (server.hasArg("api_update_interval"))
+        {
+            config.api_update_interval = atoi(server.arg("api_update_interval").c_str());
+            apiTimer.interval(config.api_update_interval);
+        }
+
+        if (server.hasArg("api_update_interval"))
+        {
+            config.timezone = atoi(server.arg("timezone").c_str());
+            NTP.setTimeZone(config.timezone);
+        }
+
+        if (server.hasArg("client_id"))
+        {
+            strlcpy(config.client_id, server.arg("client_id").c_str(), sizeof(config.client_id));
+        }
+
+        if (server.hasArg("client_secret"))
+        {
+            strlcpy(config.client_secret, server.arg("client_secret").c_str(), sizeof(config.client_secret));
+        }
         SPIFFSWrite();
         server.sendHeader("Location", "/config", true);
         server.send(302, "text/plain", "");
+    });
+
+    server.on("/config", HTTP_DELETE, []() {
+        Log.notice("Remove config\n");
+        SPIFFS.remove(CONFIG_FILE_NAME);
     });
 
     server.on("/config", []() {
@@ -386,13 +484,8 @@ void setupHTTPServer()
         server.send(200, TEXT_JSON, output);
     });
 
-    server.on("/config", HTTP_DELETE, []() {
-        Log.notice("Remove config\n");
-        SPIFFS.remove(CONFIG_FILE_NAME);
-    });
-
     server.on("/auth", []() {
-        server.sendHeader("Location", authUrl(), true);
+        server.sendHeader("Location", authUrl(config.client_id, config.client_secret), true);
         server.send(302, "text/plain", "");
     });
 
@@ -410,7 +503,6 @@ void setup()
     delay(5000);
     Log.begin(LOG_LEVEL_VERBOSE, &Serial);
     setupI2C();
-    RSCG12864B.clear();
     Log.notice("Serial ok\n");
     SPIFFSRead();
 
@@ -421,9 +513,6 @@ void setup()
     setupHTTPServer();
     RSCG12864B.clear();
 
-    RSCG12864B.print_string_5x7_xy(0, 0, "open");
-    RSCG12864B.print_string_5x7_xy(0, 12, String(String("http://") + WiFi.localIP().toString()).c_str());
-
     if (mdns.begin(MDNS_DOMAIN, WiFi.localIP()))
     {
         mdns.addService("http", "tcp", 80);
@@ -433,7 +522,6 @@ void setup()
         Log.trace("MDNS responder started\n");
     }
 
-    tokenRefreshTimer.start();
     validateAccessToken();
 }
 
@@ -514,16 +602,18 @@ void parsApi()
 
     Log.notice("TOday=%s, monthAgoStr=%s\n", todayStr, monthAgoStr);
     mainApiResponse = &callApi(config.access_token, String(monthAgoStr), String(todayStr), &mainApiResponseBuffer);
+    channelStats = &getChannelStats(config.access_token, &channelStatsResponseBuffer);
+
     if (mainApiResponse->success())
     {
         displayTimer.start();
+        apiTimer.start();
     }
     else
     {
         displayTimer.stop();
         mainApiResponse->prettyPrintTo(Serial);
     }
-    apiTimer.start();
 }
 
 void loop()
