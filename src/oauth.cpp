@@ -89,7 +89,7 @@ JsonObject &callApi(String access_token, String start_date, String end_date, Dyn
     url += "/v2/reports?";
     url += "dimensions=day";
     url += "&ids=" + urlencode("channel==MINE");
-    url += "&metrics=" + urlencode("views,comments,likes,dislikes");
+    url += "&metrics=" + urlencode("views,comments,likes,dislikes,subscribersGained,subscribersLost");
     url += "&fields=" + urlencode("columnHeaders,rows");
     url += "&startDate=" + urlencode(start_date);
     url += "&endDate=" + urlencode(end_date);

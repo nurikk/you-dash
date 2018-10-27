@@ -6,3 +6,6 @@ JsonObject &getRequest(const char *server, const int port, String request, Dynam
 JsonObject &request(const char *server, const int port, String data, DynamicJsonBuffer *jsonBuffer);
 
 time_t DatePlusDays(time_t startTime, int days);
+
+char *ultos_recursive(unsigned long val, char *s, unsigned radix, int pos);
+char *ltos(long val, char *s, int radix);

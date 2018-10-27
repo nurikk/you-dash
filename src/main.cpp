@@ -100,7 +100,6 @@ void loop()
     server.handleClient();
 }
 
-
 void refreshToken()
 {
     Log.trace("Refresh token\n");
@@ -171,15 +170,16 @@ void displayChannelStats()
             JsonObject &stats = items[0]["statistics"];
 
             char viewCount[50];
-            sprintf(viewCount, "views: %d", stats["viewCount"].as<int>());
+            char buf[32];
+            sprintf(viewCount, "views: %s", ltos(stats["viewCount"].as<int>(), buf, 10));
             RSCG12864B.print_string_5x7_xy(0, 10, viewCount);
 
             char subscriberCount[50];
-            sprintf(subscriberCount, "subscribers: %d", stats["subscriberCount"].as<int>());
+            sprintf(subscriberCount, "subscribers: %s", ltos(stats["subscriberCount"].as<int>(), buf, 10));
             RSCG12864B.print_string_5x7_xy(0, 30, subscriberCount);
 
             char videoCount[50];
-            sprintf(videoCount, "videos: %d", stats["videoCount"].as<int>());
+            sprintf(videoCount, "videos: %s", ltos(stats["videoCount"].as<int>(), buf, 10));
             RSCG12864B.print_string_5x7_xy(0, 40, videoCount);
 
             Log.notice("viewCount %l\n", stats["viewCount"].as<int>());
@@ -535,14 +535,21 @@ void setupHTTPServer()
     server.begin();
 }
 
-
-
 void displayMetric(size_t idx)
 {
     RSCG12864B.clear();
     JsonArray &rows = mainApiResponse->get<JsonArray>("rows");
-    const char *name = mainApiResponse->get<JsonArray>("columnHeaders")[idx]["name"];
-    Log.notice("Display metric: %s points: %d\n", name, rows.size());
+    String name = mainApiResponse->get<JsonArray>("columnHeaders")[idx]["name"];
+    if (name.equals("subscribersGained"))
+    {
+        name = "sub+";
+    }
+    else if (name.equals("subscribersLost"))
+    {
+        name = "sub-";
+    }
+
+    Log.notice("Display metric: %s points: %d\n", name.c_str(), rows.size());
     const int width = 128;
     const int height = 47;
     const int barWidth = width / rows.size();
@@ -560,15 +567,16 @@ void displayMetric(size_t idx)
     int preX, preY, x, y;
     preX = preY = 0;
     size_t rowsCount = rows.size();
+    char buf[32];
 
-    String maxStr = "max:" + String(maxValue);
+    String maxStr = "max:" + String(ltos(maxValue, buf, 10));
     int maxYpostion = width - 6 * maxStr.length();
 
     RSCG12864B.draw_fill_rectangle(0, 0, 127, 7);
     RSCG12864B.draw_fill_rectangle(0, 56, 127, 63);
     RSCG12864B.font_revers_on();
-    RSCG12864B.print_string_5x7_xy(0, 0, name);
-    RSCG12864B.print_string_5x7_xy(0, 56, String("min:" + String(minValue)).c_str());
+    RSCG12864B.print_string_5x7_xy(0, 0, name.c_str());
+    RSCG12864B.print_string_5x7_xy(0, 56, String("min:" + String(ltos(minValue, buf, 10))).c_str());
 
     time_t moment = NTP.getTime();
     char timeStr[5];
@@ -627,4 +635,3 @@ void parsApi()
         mainApiResponse->prettyPrintTo(Serial);
     }
 }
-
