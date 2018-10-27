@@ -63,6 +63,44 @@ Ticker rebootTimer([]() {
 
 Ticker displayTimer(renderScreen, 5000);
 
+void setup()
+{
+    Serial.begin(9600);
+    delay(5000);
+    Log.begin(LOG_LEVEL_VERBOSE, &Serial);
+    setupI2C();
+    Log.notice("Serial ok\n");
+    SPIFFSRead();
+
+    setupWifi();
+    Log.notice("Connected...yeey :)\n");
+    setupNTP();
+
+    setupHTTPServer();
+    RSCG12864B.clear();
+
+    if (mdns.begin(MDNS_DOMAIN, WiFi.localIP()))
+    {
+        mdns.addService("http", "tcp", 80);
+
+        RSCG12864B.print_string_5x7_xy(0, 24, String(String("http://") + MDNS_DOMAIN + ".local").c_str());
+
+        Log.trace("MDNS responder started\n");
+    }
+
+    validateAccessToken();
+}
+
+void loop()
+{
+    apiTimer.update();
+    tokenRefreshTimer.update();
+    rebootTimer.update();
+    displayTimer.update();
+    server.handleClient();
+}
+
+
 void refreshToken()
 {
     Log.trace("Refresh token\n");
@@ -497,33 +535,7 @@ void setupHTTPServer()
     server.begin();
 }
 
-void setup()
-{
-    Serial.begin(9600);
-    delay(5000);
-    Log.begin(LOG_LEVEL_VERBOSE, &Serial);
-    setupI2C();
-    Log.notice("Serial ok\n");
-    SPIFFSRead();
 
-    setupWifi();
-    Log.notice("Connected...yeey :)\n");
-    setupNTP();
-
-    setupHTTPServer();
-    RSCG12864B.clear();
-
-    if (mdns.begin(MDNS_DOMAIN, WiFi.localIP()))
-    {
-        mdns.addService("http", "tcp", 80);
-
-        RSCG12864B.print_string_5x7_xy(0, 24, String(String("http://") + MDNS_DOMAIN + ".local").c_str());
-
-        Log.trace("MDNS responder started\n");
-    }
-
-    validateAccessToken();
-}
 
 void displayMetric(size_t idx)
 {
@@ -532,7 +544,7 @@ void displayMetric(size_t idx)
     const char *name = mainApiResponse->get<JsonArray>("columnHeaders")[idx]["name"];
     Log.notice("Display metric: %s points: %d\n", name, rows.size());
     const int width = 128;
-    const int height = 48;
+    const int height = 47;
     const int barWidth = width / rows.size();
     const int startHeight = 8;
 
@@ -616,11 +628,3 @@ void parsApi()
     }
 }
 
-void loop()
-{
-    apiTimer.update();
-    tokenRefreshTimer.update();
-    rebootTimer.update();
-    displayTimer.update();
-    server.handleClient();
-}
