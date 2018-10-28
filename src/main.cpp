@@ -1,6 +1,13 @@
 #include "main.h"
+#include <Arduino.h>
+
+#include <Time.h>
 #include <FS.h>
 #include <ESP8266WiFi.h> //https://github.com/esp8266/Arduino
+// #include <time.h>
+// #include <sys/time.h>                   // struct timeval
+// #include <coredecls.h>                  // settimeofday_cb()
+
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h> //https://github.com/tzapu/WiFiManager
@@ -8,7 +15,7 @@
 #include <ESP8266HTTPClient.h>
 #include <Wire.h>
 #include <Ticker.h>
-#include <TimeLib.h>
+// #include <TimeLib.h>
 #include <NtpClientLib.h>
 #include <ArduinoLog.h>
 #include <RSCG12864B.h>
@@ -52,7 +59,7 @@ const size_t channelStatsResponseBufferSizes = JSON_ARRAY_SIZE(1) + JSON_OBJECT_
 DynamicJsonBuffer channelStatsResponseBuffer(channelStatsResponseBufferSizes);
 JsonObject *channelStats;
 
-size_t currentScreen = 0;
+size_t currentMetric = 0;
 
 Ticker apiTimer(parsApi, config.api_update_interval);
 Ticker tokenRefreshTimer(validateAccessToken, API_REFRESH_INTERVAL);
@@ -62,6 +69,10 @@ Ticker rebootTimer([]() {
                    1000);
 
 Ticker displayTimer(renderScreen, 5000);
+
+int screen = 0;
+#define MAIN_SCREEN 0
+#define SECONDARY_SCREEN 1
 
 void setup()
 {
@@ -151,17 +162,33 @@ void validateAccessToken()
         refreshToken();
     }
 }
+#define TZ 1      // (utc+) TZ in hours
+#define DST_MN 60 // use 60mn for summer time in some countries
+#define TZ_MN ((TZ)*60)
+#define TZ_SEC ((TZ)*3600)
+#define DST_SEC ((DST_MN)*60)
 
 void setupNTP()
 {
-    NTP.begin();
+
     NTP.setInterval(61);
     NTP.setTimeZone(config.timezone);
+    NTP.begin();
 }
 
 void displayChannelStats()
 {
     RSCG12864B.clear();
+
+    time_t currentTime = NTP.getTime();
+    char dateStr[50];
+    sprintf(dateStr, "date %02d.%02d.%4d", day(currentTime), month(currentTime), year(currentTime));
+    RSCG12864B.print_string_5x7_xy(0, 0, dateStr);
+
+    char timeStr[50];
+    sprintf(timeStr, "time %02d:%02d:%02d", hour(currentTime), minute(currentTime), second(currentTime));
+    RSCG12864B.print_string_5x7_xy(0, 10, timeStr);
+
     if (channelStats->success() && channelStats->containsKey("items"))
     {
         JsonArray &items = channelStats->get<JsonArray>("items");
@@ -172,15 +199,15 @@ void displayChannelStats()
             char viewCount[50];
             char buf[32];
             sprintf(viewCount, "views: %s", ltos(stats["viewCount"].as<int>(), buf, 10));
-            RSCG12864B.print_string_5x7_xy(0, 10, viewCount);
+            RSCG12864B.print_string_5x7_xy(0, 25, viewCount);
 
             char subscriberCount[50];
             sprintf(subscriberCount, "subscribers: %s", ltos(stats["subscriberCount"].as<int>(), buf, 10));
-            RSCG12864B.print_string_5x7_xy(0, 30, subscriberCount);
+            RSCG12864B.print_string_5x7_xy(0, 35, subscriberCount);
 
             char videoCount[50];
             sprintf(videoCount, "videos: %s", ltos(stats["videoCount"].as<int>(), buf, 10));
-            RSCG12864B.print_string_5x7_xy(0, 40, videoCount);
+            RSCG12864B.print_string_5x7_xy(0, 45, videoCount);
 
             Log.notice("viewCount %l\n", stats["viewCount"].as<int>());
             Log.notice("commentCount %l\n", stats["commentCount"].as<int>());
@@ -189,31 +216,68 @@ void displayChannelStats()
         }
     }
 }
+void displayLastApiDay()
+{
+    RSCG12864B.clear();
+    RSCG12864B.print_string_5x7_xy(0, 40, "Display last day");
 
-void renderScreen()
+    JsonArray &rows = mainApiResponse->get<JsonArray>("rows");
+    JsonArray &lastDay = rows[(int)rows.size() - 1];
+
+    lastDay.prettyPrintTo(Serial);
+    // rows.prettyPrintTo(Serial);
+}
+void renderMainApi()
 {
     if (mainApiResponse->get<JsonArray>("rows").size() == 0)
     {
+        screen++;
         return Log.error("nothing to render\n");
     }
     JsonArray &columnHeaders = mainApiResponse->get<JsonArray>("columnHeaders");
-    if (currentScreen >= columnHeaders.size())
+    if (currentMetric >= columnHeaders.size())
     {
-        currentScreen = 0;
+        currentMetric = 0;
+        screen++;
     }
-    Log.notice("renderScreen %d metricsCount %d\n", currentScreen, columnHeaders.size());
+    Log.notice("renderScreen %d metricsCount %d\n", currentMetric, columnHeaders.size());
 
-    const char *columnType = columnHeaders[currentScreen]["columnType"];
+    const char *columnType = columnHeaders[currentMetric]["columnType"];
 
     if (strcmp(columnType, "METRIC") == 0)
     {
-        displayMetric(currentScreen);
+        displayMetric(currentMetric);
+        currentMetric++;
     }
     else
     {
-        displayChannelStats();
+        displayLastApiDay();
+        currentMetric++;
+        return renderMainApi();
     }
-    currentScreen++;
+}
+void renderAuxApi()
+{
+    displayChannelStats();
+    screen++;
+}
+
+void renderScreen()
+{
+    Log.notice("date:  %d %d %d %d %d\n", year(), month(), day(), hour(), minute());
+    switch (screen)
+    {
+    case MAIN_SCREEN:
+        renderMainApi();
+        break;
+    case SECONDARY_SCREEN:
+        renderAuxApi();
+        break;
+    default:
+        screen = 0;
+        renderScreen();
+        break;
+    }
 }
 
 void displayData(JsonObject &data)
