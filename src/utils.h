@@ -9,3 +9,5 @@ time_t DatePlusDays(time_t startTime, int days);
 
 char *ultos_recursive(unsigned long val, char *s, unsigned radix, int pos);
 char *ltos(long val, char *s, int radix);
+
+time_t parseTime(const char *str);

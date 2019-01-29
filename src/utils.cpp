@@ -2,6 +2,8 @@
 #include <WiFiClientSecure.h>
 #include <ArduinoLog.h>
 #include <ArduinoJson.h>
+#include <TimeLib.h>
+
 
 String urlencode(String str)
 {
@@ -113,4 +115,21 @@ char *ltos(long val, char *s, int radix)
     *p = 0;
   }
   return s;
+}
+
+
+
+time_t parseTime(const char *str)
+{
+    tmElements_t tm;
+int Year, Month, Day, Hour, Minute, Second, TzHourOffset, TzMinOffset ;
+    // 2019-01-29T23:29:56+08:00
+  sscanf(str, "%d-%d-%dT%d:%d:%d+%d:%d", &Year, &Month, &Day, &Hour, &Minute, &Second, &TzHourOffset, &TzMinOffset);
+  tm.Year = CalendarYrToTm(Year);
+  tm.Month = Month;
+  tm.Day = Day;
+  tm.Hour = Hour;
+  tm.Minute = Minute;
+  tm.Second = Second;
+  return makeTime(tm);
 }

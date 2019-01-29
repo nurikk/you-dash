@@ -12,46 +12,20 @@
 </head>
 
 <body>
-    <div id="oauth-setup">
-        <form>
-            <div class="form-group">
-                <label for="client_id">Oauth client id</label>
-                <input required type="text" class="form-control" id="client_id" name="client_id" placeholder="Enter oauth client id">
-            </div>
+    <form id="config">
+        <div class="form-group">
+            <label for="AccountKey">AccountKey</label>
+            <input id="AccountKey" required type="text" class="form-control" name="AccountKey" placeholder="AccountKey">
+        </div>
 
-            <div class="form-group">
-                <label for="client_secret">Oauth client secret</label>
-                <input required type="text" class="form-control" id="client_secret" name="client_secret" placeholder="Enter oauth client secret">
-            </div>
-            <button type="submit" class="btn btn-primary">Apply</button>
-        </form>
-    </div>
-    <div id="auth">
-        <a target="_blank" href="/auth">Click here</a>
-        <form>
-            <div class="form-group">
-                <label for="key">Api key</label>
-                <input required type="text" class="form-control" id="authorization_code" placeholder="Enter authorization code from google">
-            </div>
-            <button type="submit" class="btn btn-primary">Auth</button>
-        </form>
-    </div>
-    <div id="config">
-        <form>
-            <div class="form-group">
-                <label for="api_update_interval">api_update_interval</label>
-                <input id="api_update_interval" required type="number" class="form-control" name="api_update_interval"
-                    placeholder="Enter api update interval">
-            </div>
+        <div class="form-group">
+            <label for="BusStopCode">BusStopCode</label>
+            <input id="BusStopCode" required type="text" class="form-control" name="BusStopCode" placeholder="BusStopCode">
+        </div>
 
-            <div class="form-group">
-                <label for="timezone">timezone</label>
-                <input id="timezone" required type="number" class="form-control" name="timezone" placeholder="Enter timezone">
-            </div>
+        <button type="submit" class="btn btn-primary">Update config</button>
+    </form>
 
-            <button type="submit" class="btn btn-primary">Update config</button>
-        </form>
-    </div>
     <button id="reset" type="button" class="btn btn-danger">Clear config</button>
     <button id="reboot" type="button" class="btn btn-danger">Reboot</button>
 
@@ -67,33 +41,11 @@
         };
 
         var init = function () {
-            $("#auth,#config,#oauth-setup").addClass(hiddenClass);
-            $.get("/config", function (config) {
-                if (!config['client_id']) {
-                    $('#oauth-setup').removeClass(hiddenClass);
-                } else if (!config['access_token']) {
-                    $('#auth').removeClass(hiddenClass);
-                } else {
-                    intiConfigForm(config);
-                }
-            });
-        };
-        var onAuthSubmit = function (e) {
-            e.preventDefault();
-            var authorization_code = $("#authorization_code").val();
-            $.ajax({
-                type: "POST",
-                url: "/exchange",
-                data: {
-                    "authorization_code": authorization_code
-                },
-                success: init
-            });
-            return false;
+            $.get("/config", intiConfigForm);
         };
 
+
         var onConfigSubmit = function (e) {
-            debugger
             e.preventDefault();
             $.ajax({
                 type: "POST",
@@ -119,8 +71,7 @@
 
         $(function () {
             init();
-            $("body").on("submit", "#auth form", onAuthSubmit);
-            $("body").on("submit", "#config form,#oauth-setup form", onConfigSubmit);
+            $("body").on("submit", "#config", onConfigSubmit);
             $('body').on("click", "#reboot", reboot);
             $('body').on("click", "#reset", reset);
 
