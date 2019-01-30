@@ -33,7 +33,7 @@ ESP8266WebServer server(80);
 #define MDNS_DOMAIN "you-dash"
 #define SSD_NAME "Youtube dashboard"
 
-#define API_REFRESH_INTERVAL 30 * 1000 // 1 minute
+#define API_REFRESH_INTERVAL 60 * 1000 // 1 minute
 
 struct Config
 {
@@ -43,7 +43,7 @@ struct Config
 
 struct Config config;
 
-Ticker apiTimer(parsApi, API_REFRESH_INTERVAL);
+Ticker apiTimer(parsApi, 1000);
 
 Ticker rebootTimer([]() {
     ESP.restart();
@@ -54,7 +54,7 @@ void setup()
 {
     Serial.begin(9600);
     delay(5000);
-    Log.begin(LOG_LEVEL_VERBOSE, &Serial);
+    Log.begin(LOG_LEVEL_SILENT, &Serial);
     setupI2C();
     Log.notice("Serial ok\n");
     SPIFFSRead();
@@ -90,13 +90,10 @@ bool ntpSynced = false;
 void setupNTP()
 {
     NTP.onNTPSyncEvent([](NTPSyncEvent_t error) {
-        Log.notice("NTP: error %d %d\n", error, NTP.getLastNTPSync());
-
         if (!error && !ntpSynced)
         {
             ntpSynced = true;
             apiTimer.start();
-            // parsApi();
         }
     });
     NTP.setInterval(61);
@@ -194,7 +191,7 @@ void setupWifi()
 void setupI2C()
 {
     RSCG12864B.begin();
-    RSCG12864B.brightness(200);
+    RSCG12864B.brightness(100);
     RSCG12864B.print_string_12_xy(20, 35, "LCD init ok");
 }
 
@@ -330,60 +327,76 @@ JsonObject &getSchedule(char *BusStopCode, char *AccountKey, DynamicJsonBuffer *
 }
 
 String busKeys[3] = {"NextBus", "NextBus2", "NextBus3"};
-
+String pad(String in, String padSeq, size_t padLen)
+{
+    String out = String(in);
+    while (out.length() < padLen)
+    {
+        out = padSeq + out;
+    }
+    return out;
+}
 void displayRow(int rowId, JsonObject *service)
 {
+    String rowText = "";
     String logKey = "";
 
-    int fontSize = 16;
+    int fontSize = 10;
     String ServiceNo = service->get<String>("ServiceNo");
-    RSCG12864B.print_string_16_xy(0, fontSize * rowId, ServiceNo.c_str());
-    time_t currentTime = NTP.getTime();
     // RSCG12864B.font_revers_on();
-
+    // RSCG12864B.print_string_5x7_xy(0, fontSize * rowId, ServiceNo.c_str());
     // RSCG12864B.font_revers_off();
+    time_t currentTime = NTP.getTime();
+
     logKey += ServiceNo + ": ";
+    rowText += pad(ServiceNo, " ", 3) + " ";
 
     for (size_t i = 0; i < sizeof(busKeys) / sizeof(busKeys[0]); i++)
     {
         String busKey = busKeys[i];
-        Log.notice("%s\n", busKey.c_str());
+        String timeText = "--";
+
         if (service->containsKey(busKey))
         {
 
             JsonObject &bus = service->get<JsonObject>(busKey.c_str());
 
-            String timeText = "--";
             const char *EstimatedArrival = bus.get<char *>("EstimatedArrival");
             if (strlen(EstimatedArrival) > 0)
             {
 
                 time_t est = parseTime(EstimatedArrival);
-                long waitMinutes = round((est - currentTime) / 60);
-                Log.notice("waitMinutes %s %d\n", EstimatedArrival, waitMinutes);
 
-                if (waitMinutes < 0)
+                if (est < currentTime)
                 {
                     timeText = "Left";
                 }
-                else if (waitMinutes < 100)
+                else
                 {
+                    long waitMinutes = round((est - currentTime) / 60);
+                    Log.notice("waitMinutes %s %d\n", EstimatedArrival, waitMinutes);
                     timeText = String(waitMinutes);
                 }
             }
-            logKey += " " + timeText;
-            // timeText = "Left";
-
-            RSCG12864B.print_string_5x7_xy(30 + 30 * i, 4 + fontSize * rowId, timeText.c_str());
         }
-        Log.notice("%s\n", logKey.c_str());
+        else
+        {
+            Log.notice("No bus %s for %s", busKey.c_str(), ServiceNo.c_str());
+        }
+        rowText += " " + pad(timeText, " ", 4);
+        logKey += " " + timeText;
+        // timeText = "Left";
     }
+
+    RSCG12864B.print_string_5x7_xy(0, fontSize * rowId, rowText.c_str());
+    Log.notice("%s\n", logKey.c_str());
 
     // service->prettyPrintTo(Serial);
     Log.notice("Render %s\n", ServiceNo.c_str());
 }
 void parsApi()
 {
+    apiTimer.interval(API_REFRESH_INTERVAL);
 
     const size_t capacity = JSON_ARRAY_SIZE(4) + JSON_OBJECT_SIZE(3) + 4 * JSON_OBJECT_SIZE(5) + 12 * JSON_OBJECT_SIZE(9) + 7029;
 
@@ -404,6 +417,10 @@ void parsApi()
         {
             RSCG12864B.print_string_5x7_xy(0, 35, "No buses, too late :(");
         }
+    }
+    else
+    {
+        Log.error("JSON parsing not success\n");
     }
     RSCG12864B.print_string_5x7_xy(5, 56, NTP.getTimeDateString().c_str());
     Log.notice("Current time: %s\n", NTP.getTimeDateString().c_str());
