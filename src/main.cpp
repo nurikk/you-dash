@@ -22,12 +22,14 @@
 #include <ESP8266mDNS.h>
 #include "utils.h"
 #include "oauth.h"
+#include <ESP8266HTTPUpdateServer.h>
 
 #define TEXT_JSON "text/json"
 
 MDNSResponder mdns;
 
 ESP8266WebServer server(80);
+ESP8266HTTPUpdateServer httpUpdater;
 
 #define CONFIG_FILE_NAME "/config.json"
 #define ACCESS_POINT_NAME "Youtube dashboard"
@@ -64,16 +66,23 @@ size_t currentMetric = 0;
 Ticker apiTimer(parsApi, config.api_update_interval);
 Ticker tokenRefreshTimer(validateAccessToken, API_REFRESH_INTERVAL);
 Ticker rebootTimer([]() {
-    ESP.restart();
+    ESP.reset();
 },
                    1000);
 
 Ticker displayTimer(renderScreen, 5000);
+void appStart();
+Ticker startAppTimer(appStart, 100);
 
 int screen = 0;
 #define MAIN_SCREEN 0
 #define SECONDARY_SCREEN 1
-
+void appStart()
+{
+    Log.notice("Starting app. Time: %s (timezone: %d)\n", NTP.getTimeDateString().c_str(), NTP.getTimeZone());
+    startAppTimer.stop();
+    validateAccessToken();
+}
 void setup()
 {
     Serial.begin(9600);
@@ -98,17 +107,18 @@ void setup()
 
         Log.trace("MDNS responder started\n");
     }
-
-    validateAccessToken();
 }
 
 void loop()
 {
+
     apiTimer.update();
     tokenRefreshTimer.update();
     rebootTimer.update();
     displayTimer.update();
     server.handleClient();
+    mdns.update();
+    startAppTimer.update();
 }
 
 void refreshToken()
@@ -126,6 +136,7 @@ void refreshToken()
         tokenRefreshTimer.stop();
         Log.error("Token refresh error\n");
         refresh_data.prettyPrintTo(Serial);
+        Log.notice("\n");
 
         RSCG12864B.clear();
         RSCG12864B.print_string_5x7_xy(0, 0, refresh_data["error"]);
@@ -149,6 +160,8 @@ void validateAccessToken()
     DynamicJsonBuffer jsonBuffer(bufferSize);
     JsonObject &root = info(config.access_token, &jsonBuffer);
     root.prettyPrintTo(Serial);
+    Log.notice("\n");
+
     if (root.success() && root.containsKey("expires_in"))
     {
         int expires = root["expires_in"].as<int>();
@@ -162,18 +175,18 @@ void validateAccessToken()
         refreshToken();
     }
 }
-#define TZ 1      // (utc+) TZ in hours
-#define DST_MN 60 // use 60mn for summer time in some countries
-#define TZ_MN ((TZ)*60)
-#define TZ_SEC ((TZ)*3600)
-#define DST_SEC ((DST_MN)*60)
-
+bool ntpSynced = false;
 void setupNTP()
 {
+    NTP.onNTPSyncEvent([](NTPSyncEvent_t error) {
+        if (!error && !ntpSynced)
+        {
+            ntpSynced = true;
+            startAppTimer.start();
+        }
+    });
 
-    NTP.setInterval(61);
-    NTP.setTimeZone(config.timezone);
-    NTP.begin();
+    NTP.begin("pool.ntp.org", config.timezone, true);
 }
 
 void displayChannelStats()
@@ -216,17 +229,7 @@ void displayChannelStats()
         }
     }
 }
-void displayLastApiDay()
-{
-    RSCG12864B.clear();
-    RSCG12864B.print_string_5x7_xy(0, 40, "Display last day");
 
-    JsonArray &rows = mainApiResponse->get<JsonArray>("rows");
-    JsonArray &lastDay = rows[(int)rows.size() - 1];
-
-    lastDay.prettyPrintTo(Serial);
-    // rows.prettyPrintTo(Serial);
-}
 void renderMainApi()
 {
     if (mainApiResponse->get<JsonArray>("rows").size() == 0)
@@ -243,18 +246,16 @@ void renderMainApi()
     Log.notice("renderScreen %d metricsCount %d\n", currentMetric, columnHeaders.size());
 
     const char *columnType = columnHeaders[currentMetric]["columnType"];
-
+    Log.notice("columnType %s\n", columnType);
     if (strcmp(columnType, "METRIC") == 0)
     {
         displayMetric(currentMetric);
-        currentMetric++;
     }
     else
     {
-        displayLastApiDay();
-        currentMetric++;
-        return renderMainApi();
+        displayDimesion(currentMetric);
     }
+    currentMetric++;
 }
 void renderAuxApi()
 {
@@ -264,7 +265,6 @@ void renderAuxApi()
 
 void renderScreen()
 {
-    Log.notice("date:  %d %d %d %d %d\n", year(), month(), day(), hour(), minute());
     switch (screen)
     {
     case MAIN_SCREEN:
@@ -333,6 +333,7 @@ void SPIFFSRead()
             Log.notice("Parsed json\n");
 
             json.prettyPrintTo(Serial);
+            Log.notice("\n");
 
             if (json.containsKey("access_token"))
             {
@@ -507,6 +508,7 @@ void handleExchange()
             strlcpy(config.access_token, root["access_token"], sizeof(config.access_token));
             strlcpy(config.refresh_token, root["refresh_token"], sizeof(config.refresh_token));
             SPIFFSWrite();
+            rebootTimer.start();
             server.sendHeader("Location", "/config", true);
             server.send(302, "text/plain", "");
         }
@@ -549,23 +551,27 @@ void setupHTTPServer()
         Log.notice("Upload new config\n");
         if (server.hasArg("api_update_interval"))
         {
+            Log.notice("Set api_update_interval %s \n", server.arg("api_update_interval").c_str());
             config.api_update_interval = atoi(server.arg("api_update_interval").c_str());
             apiTimer.interval(config.api_update_interval);
         }
 
-        if (server.hasArg("api_update_interval"))
+        if (server.hasArg("timezone"))
         {
+            Log.notice("Set timezone %s \n", server.arg("timezone").c_str());
             config.timezone = atoi(server.arg("timezone").c_str());
             NTP.setTimeZone(config.timezone);
         }
 
         if (server.hasArg("client_id"))
         {
+            Log.notice("Set client_id %s \n", server.arg("client_id").c_str());
             strlcpy(config.client_id, server.arg("client_id").c_str(), sizeof(config.client_id));
         }
 
         if (server.hasArg("client_secret"))
         {
+            Log.notice("Set client_secret %s \n", server.arg("client_secret").c_str());
             strlcpy(config.client_secret, server.arg("client_secret").c_str(), sizeof(config.client_secret));
         }
         SPIFFSWrite();
@@ -596,22 +602,45 @@ void setupHTTPServer()
     server.serveStatic(CONFIG_FILE_NAME, SPIFFS, CONFIG_FILE_NAME);
     server.serveStatic("/", SPIFFS, "/main.html");
 
+    httpUpdater.setup(&server);
+
     server.begin();
 }
-
-void displayMetric(size_t idx)
+String mapName(String origName)
+{
+    if (origName.equals("subscribersGained"))
+    {
+        return "sub+";
+    }
+    else if (origName.equals("subscribersLost"))
+    {
+        return "sub-";
+    }
+    else
+    {
+        return origName;
+    }
+}
+void displayDimesion(size_t idx)
 {
     RSCG12864B.clear();
     JsonArray &rows = mainApiResponse->get<JsonArray>("rows");
     String name = mainApiResponse->get<JsonArray>("columnHeaders")[idx]["name"];
-    if (name.equals("subscribersGained"))
-    {
-        name = "sub+";
-    }
-    else if (name.equals("subscribersLost"))
-    {
-        name = "sub-";
-    }
+
+    String minVal = rows[0][idx];
+    String maxVal = rows[rows.size() - 1][idx];
+    RSCG12864B.print_string_5x7_xy(0, 0, ("Dimension: " + name).c_str());
+    RSCG12864B.print_string_5x7_xy(0, 10, ("Data points: " + String(rows.size())).c_str());
+    RSCG12864B.print_string_5x7_xy(0, 20, ("Start: " + minVal).c_str());
+    RSCG12864B.print_string_5x7_xy(0, 30, ("End: " + maxVal).c_str());
+
+    Log.notice("Display dimension: %s points: %d minVal: %s maxVal: %s\n", name.c_str(), rows.size(), minVal.c_str(), maxVal.c_str());
+}
+void displayMetric(size_t idx)
+{
+    RSCG12864B.clear();
+    JsonArray &rows = mainApiResponse->get<JsonArray>("rows");
+    String name = mapName(mainApiResponse->get<JsonArray>("columnHeaders")[idx]["name"]);
 
     Log.notice("Display metric: %s points: %d\n", name.c_str(), rows.size());
     const int width = 128;
@@ -697,5 +726,6 @@ void parsApi()
     {
         displayTimer.stop();
         mainApiResponse->prettyPrintTo(Serial);
+        Log.notice("\n");
     }
 }

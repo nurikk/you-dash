@@ -10,5 +10,6 @@ JsonObject &getJsonConfig();
 void parsApi();
 void renderScreen();
 void displayMetric(size_t idx);
+void displayDimesion(size_t idx);
 void setupI2C();
 void setupHTTPServer();

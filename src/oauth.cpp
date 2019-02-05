@@ -19,9 +19,8 @@ const int httpsPort = 443;
 
 String authUrl(String client_id, String client_secret)
 {
-    String URL;
-    URL = auth_uri + "?";
-    URL += "scope=" + urlencode(scope);
+    String URL = auth_uri;
+    URL += "?scope=" + urlencode(scope);
     URL += "&redirect_uri=" + urlencode(redirect_uri);
     URL += "&response_type=" + urlencode(response_type);
     URL += "&client_id=" + urlencode(client_id);
@@ -33,11 +32,11 @@ JsonObject &exchange(String authorization_code, String client_id, String client_
 {
 
     String postData = "";
-    postData += "code=" + authorization_code;
-    postData += "&client_id=" + client_id;
-    postData += "&client_secret=" + client_secret;
-    postData += "&redirect_uri=" + redirect_uri;
-    postData += "&grant_type=" + String("authorization_code");
+    postData += "code=" + String(authorization_code);
+    postData += "&client_id=" + String(client_id);
+    postData += "&client_secret=" + String(client_secret);
+    postData += "&redirect_uri=" + String(redirect_uri);
+    postData += "&grant_type=authorization_code";
 
     String postHeader = "";
     postHeader += ("POST " + token_uri + " HTTP/1.1\r\n");
@@ -55,10 +54,10 @@ JsonObject &refresh(String refresh_token, String client_id, String client_secret
 {
 
     String postData = "";
-    postData += "refresh_token=" + refresh_token;
-    postData += "&client_id=" + client_id;
-    postData += "&client_secret=" + client_secret;
-    postData += "&grant_type=" + String("refresh_token");
+    postData += "refresh_token=" + String(refresh_token);
+    postData += "&client_id=" + String(client_id);
+    postData += "&client_secret=" + String(client_secret);
+    postData += "&grant_type=refresh_token";
 
     String postHeader = "";
     postHeader += ("POST " + token_uri + " HTTP/1.1\r\n");

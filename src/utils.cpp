@@ -61,7 +61,7 @@ JsonObject &request(const char *server, const int port, String data, DynamicJson
         Log.trace("%s\n", line.c_str());
         if (line == "\r")
         {
-            Log.notice("Headers received\n");
+            Log.trace("Headers received\n");
             break;
         }
     }
