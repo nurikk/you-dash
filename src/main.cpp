@@ -66,7 +66,9 @@ size_t currentMetric = 0;
 Ticker apiTimer(parsApi, config.api_update_interval);
 Ticker tokenRefreshTimer(validateAccessToken, API_REFRESH_INTERVAL);
 Ticker rebootTimer([]() {
+    delay(3000);
     ESP.reset();
+    delay(5000);
 },
                    1000);
 
@@ -422,7 +424,7 @@ void setupWifi()
 void setupI2C()
 {
     RSCG12864B.begin();
-    RSCG12864B.brightness(200);
+    RSCG12864B.brightness(150);
     RSCG12864B.print_string_12_xy(20, 35, "LCD init ok");
 }
 
