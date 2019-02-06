@@ -61,7 +61,7 @@ JsonObject &refresh(String refresh_token, String client_id, String client_secret
 
     String postHeader = "";
     postHeader += ("POST " + token_uri + " HTTP/1.1\r\n");
-    postHeader += ("Host: " + String(host) + ":" + String(httpsPort) + "\r\n");
+    postHeader += ("Host: " + String(host) + ":" + httpsPort + "\r\n");
     postHeader += ("Connection: close\r\n");
     postHeader += ("Content-Type: application/x-www-form-urlencoded\r\n");
     postHeader += ("Content-Length: ");

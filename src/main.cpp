@@ -4,10 +4,6 @@
 #include <Time.h>
 #include <FS.h>
 #include <ESP8266WiFi.h> //https://github.com/esp8266/Arduino
-// #include <time.h>
-// #include <sys/time.h>                   // struct timeval
-// #include <coredecls.h>                  // settimeofday_cb()
-
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h> //https://github.com/tzapu/WiFiManager
@@ -15,7 +11,6 @@
 #include <ESP8266HTTPClient.h>
 #include <Wire.h>
 #include <Ticker.h>
-// #include <TimeLib.h>
 #include <NtpClientLib.h>
 #include <ArduinoLog.h>
 #include <RSCG12864B.h>
@@ -24,7 +19,7 @@
 #include "oauth.h"
 #include <ESP8266HTTPUpdateServer.h>
 
-#define TEXT_JSON "text/json"
+#define TEXT_JSON "application/json"
 
 MDNSResponder mdns;
 
@@ -44,7 +39,7 @@ struct Config
     char client_secret[100] = "";
 
     char access_token[150] = "";
-    char refresh_token[50] = "";
+    char refresh_token[100] = "";
 
     int api_update_interval = API_REFRESH_INTERVAL;
     int timezone = 12;
@@ -87,7 +82,7 @@ void appStart()
 }
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
     delay(5000);
     Log.begin(LOG_LEVEL_VERBOSE, &Serial);
     setupI2C();
@@ -424,8 +419,11 @@ void setupWifi()
 void setupI2C()
 {
     RSCG12864B.begin();
-    RSCG12864B.brightness(150);
+    RSCG12864B.display_off();
+    RSCG12864B.brightness(0);
     RSCG12864B.print_string_12_xy(20, 35, "LCD init ok");
+    RSCG12864B.brightness(150);
+    RSCG12864B.display_on();
 }
 
 File fsUploadFile;
@@ -507,6 +505,7 @@ void handleExchange()
 
         if (root.success() && !root.containsKey("error"))
         {
+            root.prettyPrintTo(Serial);
             strlcpy(config.access_token, root["access_token"], sizeof(config.access_token));
             strlcpy(config.refresh_token, root["refresh_token"], sizeof(config.refresh_token));
             SPIFFSWrite();
@@ -600,6 +599,7 @@ void setupHTTPServer()
     });
 
     server.on("/exchange", HTTP_POST, handleExchange);
+    server.on("/refresh", HTTP_GET, refreshToken);
 
     server.serveStatic(CONFIG_FILE_NAME, SPIFFS, CONFIG_FILE_NAME);
     server.serveStatic("/", SPIFFS, "/main.html");
@@ -706,7 +706,8 @@ void displayMetric(size_t idx)
 void parsApi()
 {
 
-    time_t currentTime = NTP.getTime();
+    time_t currentTime = now();
+    Log.notice("hacked currentTime %s\n", NTP.getTimeDateString(currentTime).c_str());
 
     time_t monthAgo = DatePlusDays(currentTime, -32);
     char todayStr[12];
@@ -715,7 +716,7 @@ void parsApi()
     sprintf(todayStr, "%4d-%02d-%02d", year(currentTime), month(currentTime), day(currentTime));
     sprintf(monthAgoStr, "%4d-%02d-%02d", year(monthAgo), month(monthAgo), day(monthAgo));
 
-    Log.notice("TOday=%s, monthAgoStr=%s\n", todayStr, monthAgoStr);
+    Log.notice("End date: %s, start date: %s\n", todayStr, monthAgoStr);
     mainApiResponse = &callApi(config.access_token, String(monthAgoStr), String(todayStr), &mainApiResponseBuffer);
     channelStats = &getChannelStats(config.access_token, &channelStatsResponseBuffer);
 
