@@ -58,9 +58,11 @@ JsonObject *channelStats;
 
 size_t currentMetric = 0;
 
-Ticker apiTimer(parsApi, config.api_update_interval);
+Ticker apiTimer(parsApi, 200);
+Ticker channelStatsTimer(updateChannelStats, 60 * 1000); //1 minute
 Ticker tokenRefreshTimer(validateAccessToken, API_REFRESH_INTERVAL);
 Ticker rebootTimer([]() {
+    displayLog("Rebooting");
     delay(3000);
     ESP.reset();
     delay(5000);
@@ -74,35 +76,59 @@ Ticker startAppTimer(appStart, 100);
 int screen = 0;
 #define MAIN_SCREEN 0
 #define SECONDARY_SCREEN 1
+int currentLine = 0;
+int lineHeight = 8;
+int screenHeight = 64;
+void displayLog(const char *logString)
+{
+    RSCG12864B.print_string_5x7_xy(0, currentLine * lineHeight, logString);
+    currentLine++;
+    if (currentLine >= screenHeight / lineHeight)
+    {
+        currentLine = 0;
+        delay(5000);
+        RSCG12864B.clear();
+    }
+}
+
+void updateChannelStats()
+{
+    channelStats = &getChannelStats(config.access_token, &channelStatsResponseBuffer);
+    if (channelStats->success())
+    {
+        channelStatsTimer.start();
+    }
+}
+
 void appStart()
 {
-    Log.notice("Starting app. Time: %s (timezone: %d)\n", NTP.getTimeDateString().c_str(), NTP.getTimeZone());
-    startAppTimer.stop();
+    displayLog("Starting...");
+
+    Log.notice("Starting app. Time: %s (timezone: %d)\n", NTP.getTimeDateString(now()).c_str(), NTP.getTimeZone());
     validateAccessToken();
+    startAppTimer.stop();
 }
 void setup()
 {
-    Serial.begin(115200);
+    // Serial.begin(115200);
     delay(5000);
     Log.begin(LOG_LEVEL_VERBOSE, &Serial);
     setupI2C();
-    Log.notice("Serial ok\n");
+    // displayLog("Serial ok");
+    delay(200);
     SPIFFSRead();
 
     setupWifi();
-    Log.notice("Connected...yeey :)\n");
+    displayLog("Connected...yeey :)");
     setupNTP();
 
     setupHTTPServer();
-    RSCG12864B.clear();
 
     if (mdns.begin(MDNS_DOMAIN, WiFi.localIP()))
     {
         mdns.addService("http", "tcp", 80);
-
-        RSCG12864B.print_string_5x7_xy(0, 24, String(String("http://") + MDNS_DOMAIN + ".local").c_str());
-
-        Log.trace("MDNS responder started\n");
+        displayLog("MDNS responder started");
+        displayLog(String(String("http://") + MDNS_DOMAIN + ".local").c_str());
     }
 }
 
@@ -110,6 +136,7 @@ void loop()
 {
 
     apiTimer.update();
+    channelStatsTimer.update();
     tokenRefreshTimer.update();
     rebootTimer.update();
     displayTimer.update();
@@ -120,64 +147,66 @@ void loop()
 
 void refreshToken()
 {
-    Log.trace("Refresh token\n");
+    displayLog("Refreshing token");
     DynamicJsonBuffer jsonBuffer(255);
     JsonObject &refresh_data = refresh(config.refresh_token, config.client_id, config.client_secret, &jsonBuffer);
     if (refresh_data.success() && refresh_data.containsKey("access_token"))
     {
+        displayLog("Refreshing token success");
         strlcpy(config.access_token, refresh_data["access_token"], sizeof(config.access_token));
         SPIFFSWrite();
     }
     else
     {
         tokenRefreshTimer.stop();
-        Log.error("Token refresh error\n");
-        refresh_data.prettyPrintTo(Serial);
-        Log.notice("\n");
-
-        RSCG12864B.clear();
-        RSCG12864B.print_string_5x7_xy(0, 0, refresh_data["error"]);
-        RSCG12864B.print_string_5x7_xy(0, 20, refresh_data["error_description"]);
+        displayLog("Refreshing token error");
+        displayLog(refresh_data["error"]);
+        displayLog(refresh_data["error_description"]);
     }
 }
 
 void validateAccessToken()
 {
-    Log.trace("validateAccessToken\n");
+    displayLog("Validating token");
 
     if (strlen(config.access_token) == 0)
     {
-        RSCG12864B.clear();
-        RSCG12864B.print_string_5x7_xy(0, 0, "no token info");
-        RSCG12864B.print_string_5x7_xy(0, 12, String(String("http://") + WiFi.localIP().toString()).c_str());
+        displayLog("No token");
+        displayLog(String(String("http://") + WiFi.localIP().toString()).c_str());
         return;
     }
 
     const size_t bufferSize = JSON_OBJECT_SIZE(6) + 340;
     DynamicJsonBuffer jsonBuffer(bufferSize);
     JsonObject &root = info(config.access_token, &jsonBuffer);
-    root.prettyPrintTo(Serial);
-    Log.notice("\n");
+    // root.prettyPrintTo(Serial);
+    // Log.notice("\n");
 
     if (root.success() && root.containsKey("expires_in"))
     {
+        displayLog("Token validated");
         int expires = root["expires_in"].as<int>();
         tokenRefreshTimer.interval(1000 * expires);
         tokenRefreshTimer.start();
 
+        displayTimer.start();
         parsApi();
+        updateChannelStats();
     }
     else
     {
+        displayLog("Token might be expired");
         refreshToken();
     }
 }
 bool ntpSynced = false;
 void setupNTP()
 {
+    displayLog("Setting up NTP");
     NTP.onNTPSyncEvent([](NTPSyncEvent_t error) {
         if (!error && !ntpSynced)
         {
+            displayLog("NTP sync event done");
             ntpSynced = true;
             startAppTimer.start();
         }
@@ -190,7 +219,7 @@ void displayChannelStats()
 {
     RSCG12864B.clear();
 
-    time_t currentTime = NTP.getTime();
+    time_t currentTime = now();
     char dateStr[50];
     sprintf(dateStr, "date %02d.%02d.%4d", day(currentTime), month(currentTime), year(currentTime));
     RSCG12864B.print_string_5x7_xy(0, 0, dateStr);
@@ -304,10 +333,12 @@ void displayData(JsonObject &data)
 
 void SPIFFSRead()
 {
+    RSCG12864B.print_string_12("Reading SPIFFS");
     const size_t configBufferSize = JSON_OBJECT_SIZE(5) + 400;
 
     if (!SPIFFS.begin())
     {
+        RSCG12864B.print_string_12("Reading SPIFFS error");
         return Log.error("SPIFFS.begin error\n");
     }
 
@@ -329,7 +360,7 @@ void SPIFFSRead()
 
             Log.notice("Parsed json\n");
 
-            json.prettyPrintTo(Serial);
+            // json.prettyPrintTo(Serial);
             Log.notice("\n");
 
             if (json.containsKey("access_token"))
@@ -367,6 +398,7 @@ void SPIFFSRead()
     {
         Log.notice("Config file doesn't exist\n");
     }
+    RSCG12864B.print_string_12("Reading SPIFFS done");
 }
 
 JsonObject &getJsonConfig()
@@ -403,13 +435,13 @@ void setupWifi()
 {
     WiFiManager wifiManager;
     wifiManager.setMinimumSignalQuality();
-    RSCG12864B.clear();
-    RSCG12864B.print_string_5x7_xy(0, 35, "Connecting to WiFi...");
+
+    displayLog("Connecting to WiFi...");
     if (!wifiManager.autoConnect(ACCESS_POINT_NAME))
     {
-        Log.error("Failed to connect and hit timeout\n");
-        RSCG12864B.print_string_5x7_xy(0, 0, "Please connect to wifi");
-        RSCG12864B.print_string_5x7_xy(0, 20, ACCESS_POINT_NAME);
+        displayLog("Failed to connect and hit timeout");
+        displayLog("Please connect to wifi");
+        displayLog(ACCESS_POINT_NAME);
         delay(3000);
         ESP.reset();
         delay(5000);
@@ -421,7 +453,7 @@ void setupI2C()
     RSCG12864B.begin();
     RSCG12864B.display_off();
     RSCG12864B.brightness(0);
-    RSCG12864B.print_string_12_xy(20, 35, "LCD init ok");
+    displayLog("LCD init ok");
     RSCG12864B.brightness(150);
     RSCG12864B.display_on();
 }
@@ -505,11 +537,10 @@ void handleExchange()
 
         if (root.success() && !root.containsKey("error"))
         {
-            root.prettyPrintTo(Serial);
+            // root.prettyPrintTo(Serial);
             strlcpy(config.access_token, root["access_token"], sizeof(config.access_token));
             strlcpy(config.refresh_token, root["refresh_token"], sizeof(config.refresh_token));
             SPIFFSWrite();
-            rebootTimer.start();
             server.sendHeader("Location", "/config", true);
             server.send(302, "text/plain", "");
         }
@@ -519,7 +550,7 @@ void handleExchange()
             char output[root.measureLength() + 1];
             root.printTo(output, sizeof(output));
 
-            Log.error("authResponse %s\n", output);
+            displayLog(output);
             server.send(500, TEXT_JSON, output);
         }
     }
@@ -673,7 +704,7 @@ void displayMetric(size_t idx)
     RSCG12864B.print_string_5x7_xy(0, 0, name.c_str());
     RSCG12864B.print_string_5x7_xy(0, 56, String("min:" + String(ltos(minValue, buf, 10))).c_str());
 
-    time_t moment = NTP.getTime();
+    time_t moment = now();
     char timeStr[5];
     sprintf(timeStr, "%02d:%02d", hour(moment), minute(moment));
 
@@ -706,6 +737,8 @@ void displayMetric(size_t idx)
 void parsApi()
 {
 
+    apiTimer.interval(config.api_update_interval);
+
     time_t currentTime = now();
     Log.notice("hacked currentTime %s\n", NTP.getTimeDateString(currentTime).c_str());
 
@@ -718,17 +751,13 @@ void parsApi()
 
     Log.notice("End date: %s, start date: %s\n", todayStr, monthAgoStr);
     mainApiResponse = &callApi(config.access_token, String(monthAgoStr), String(todayStr), &mainApiResponseBuffer);
-    channelStats = &getChannelStats(config.access_token, &channelStatsResponseBuffer);
 
     if (mainApiResponse->success())
     {
-        displayTimer.start();
         apiTimer.start();
     }
     else
     {
-        displayTimer.stop();
-        mainApiResponse->prettyPrintTo(Serial);
-        Log.notice("\n");
+        displayLog("Charts api parse error");
     }
 }
